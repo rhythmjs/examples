@@ -1,0 +1,23 @@
+{
+  "name": "mongodb-example",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/main.ts",
+    "start": "bun src/main.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rhythmjs/middleware": "^0.0.5",
+    "@rhythmjs/rhythm": "^0.0.12",
+    "@rhythmjs/router": "^0.0.12",
+    "mongodb": "^6.10.0",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.2",
+    "@types/node": "^26.6.3",
+    "typescript": "^7.0.2"
+  }
+}

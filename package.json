@@ -1,0 +1,38 @@
+{
+  "name": "rhythmjs-examples",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Database examples for Rhythm on Bun: Drizzle, Prisma, and MikroORM on PostgreSQL, plus the native MongoDB driver.",
+  "homepage": "https://rhythm.js.org",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhythmjs/examples.git"
+  },
+  "type": "module",
+  "workspaces": [
+    "examples/*"
+  ],
+  "scripts": {
+    "typecheck": "bun run --filter '*' typecheck",
+    "lint": "oxlint examples/*/src",
+    "fmt": "prettier --write \"examples/*/src/**/*.ts\" \"examples/*/*.ts\" \"examples/*/*.json\" \"*.json\"",
+    "fmt:check": "prettier --check \"examples/*/src/**/*.ts\" \"examples/*/*.ts\" \"examples/*/*.json\" \"*.json\"",
+    "check": "bun run fmt:check && bun run lint && bun run typecheck"
+  },
+  "trustedDependencies": [
+    "@prisma/client",
+    "@prisma/engines",
+    "prisma"
+  ],
+  "devDependencies": {
+    "@types/bun": "^1.4.2",
+    "@types/node": "^26.6.3",
+    "oxlint": "^1.0.0",
+    "prettier": "^3.5.0",
+    "typescript": "^7.0.2"
+  },
+  "engines": {
+    "bun": ">=1.2.0"
+  }
+}
