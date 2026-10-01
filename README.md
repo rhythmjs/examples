@@ -1,6 +1,6 @@
-# Rhythm database examples
+# Rhythm examples
 
-A Bun workspace of small, self-contained apps showing how to wire a database into
+A Bun workspace of small, self-contained apps showing how to wire a database, or another tool, into
 [Rhythm](https://rhythm.js.org) properly: the connection is a `provide(factory, dispose)` provider, the
 service is a factory resolved from that provider, the controller is a `RhythmRouter`, and
 `appModule.teardown()` closes everything on shutdown. Request/response contracts are
@@ -8,7 +8,7 @@ service is a factory resolved from that provider, the controller is a `RhythmRou
 `intercept(…)` on responses, and a `filter()` error boundary that turns thrown `HttpError`s (and anything
 unexpected) into JSON failures.
 
-Every example serves the same notes CRUD API:
+The four database examples serve the same notes CRUD API:
 
 | Method | Path             |                          |
 | ------ | ---------------- | ------------------------ |
@@ -20,17 +20,36 @@ Every example serves the same notes CRUD API:
 
 ## Examples
 
-| Example                                                  | Stack                                    | Port |
-| -------------------------------------------------------- | ---------------------------------------- | ---- |
-| [`examples/drizzle-postgres`](examples/drizzle-postgres) | Drizzle ORM + Bun native SQL, PostgreSQL | 3001 |
-| [`examples/prisma-postgres`](examples/prisma-postgres)   | Prisma, PostgreSQL                       | 3002 |
-| [`examples/mikro-orm-postgres`](examples/mikro-orm-postgres) | MikroORM (`EntitySchema`), PostgreSQL | 3003 |
-| [`examples/mongodb`](examples/mongodb)                   | Official MongoDB driver                  | 3004 |
+| Example                                                      | Stack                                    | Port |
+| ------------------------------------------------------------ | ---------------------------------------- | ---- |
+| [`examples/drizzle-postgres`](examples/drizzle-postgres)     | Drizzle ORM + Bun native SQL, PostgreSQL | 3001 |
+| [`examples/prisma-postgres`](examples/prisma-postgres)       | Prisma, PostgreSQL                       | 3002 |
+| [`examples/mikro-orm-postgres`](examples/mikro-orm-postgres) | MikroORM (`EntitySchema`), PostgreSQL    | 3003 |
+| [`examples/mongodb`](examples/mongodb)                       | Official MongoDB driver                  | 3004 |
+
+### Integrations
+
+Each of these backs a recipe in the [integrations docs](https://rhythm.js.org/integrations/ai-sdk/). They are built from the
+[template](https://github.com/rhythmjs/template): the same module, controller, service, `main.ts` and tests, plus only what the
+integration adds. Each README lists exactly what was added.
+
+| Example                                        | Stack                                                                     | Port | Needs                                      |
+| ---------------------------------------------- | ------------------------------------------------------------------------- | ---- | ------------------------------------------ |
+| [`examples/ai-sdk`](examples/ai-sdk)           | Vercel AI SDK: streaming chat, summary, model swap via `@rhythmjs/config` | 3008 | `OPENAI_API_KEY` to run (tests use a mock) |
+| [`examples/better-auth`](examples/better-auth) | Better Auth (email + password) on Bun SQLite                              | 3007 | nothing                                    |
+| [`examples/file-upload`](examples/file-upload) | `multipart` uploads to disk and to S3 (MinIO)                             | 3012 | MinIO for the S3 route                     |
+| [`examples/nodemailer`](examples/nodemailer)   | Nodemailer over SMTP (Mailpit) or a JSON transport                        | 3009 | nothing (Mailpit optional)                 |
+| [`examples/redis`](examples/redis)             | Bun `RedisClient` cache-aside                                             | 3011 | Redis                                      |
+| [`examples/resend`](examples/resend)           | Resend email API                                                          | 3010 | `RESEND_API_KEY` to run (tests use a fake) |
+| [`examples/scalar`](examples/scalar)           | `@rhythmjs/openapi` + Scalar reference                                    | 3005 | nothing                                    |
+| [`examples/swagger-ui`](examples/swagger-ui)   | `@rhythmjs/openapi` + Swagger UI                                          | 3006 | nothing                                    |
+
+`bun run test` runs every spec. The ones that need a service skip themselves with a message when it is not reachable.
 
 ## Getting started
 
 ```sh
-docker compose up -d   # PostgreSQL 17 (databases created by docker/postgres-init.sql) + MongoDB 8
+docker compose up -d   # PostgreSQL 17 (databases created by docker/postgres-init.sql), MongoDB 8, Redis, Mailpit, MinIO
 bun install
 ```
 

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@rhythmjs/middleware": "^0.0.5",
-    "@rhythmjs/rhythm": "^0.0.12",
+    "@rhythmjs/rhythm": "^0.0.13",
     "@rhythmjs/router": "^0.0.12",
     "mongodb": "^6.10.0",
     "zod": "^4.1.0"

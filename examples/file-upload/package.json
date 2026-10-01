@@ -1,0 +1,24 @@
+{
+  "name": "file-upload-example",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/main.ts",
+    "start": "bun src/main.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test && bun run test:e2e",
+    "test:e2e": "bun test ./test/*.e2e-spec.ts"
+  },
+  "dependencies": {
+    "@rhythmjs/http": "^0.0.8",
+    "@rhythmjs/rhythm": "^0.0.13",
+    "@rhythmjs/router": "^0.0.12"
+  },
+  "devDependencies": {
+    "@rhythmjs/testing": "^0.0.2",
+    "@types/bun": "^1.4.2",
+    "@types/node": "^26.6.3",
+    "typescript": "^7.0.2"
+  }
+}

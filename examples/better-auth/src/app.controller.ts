@@ -1,0 +1,23 @@
+import { RhythmRouter } from "@rhythmjs/router";
+import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
+import type { appService } from "./app.service";
+import { requireSession, type SessionContext } from "./lib/session";
+
+export type AppContext = RhythmHttpContext &
+  SessionContext & {
+    appService: typeof appService;
+  };
+
+export const appController = new RhythmRouter<AppContext>()
+  .get("/", (ctx) => {
+    ctx.response.headers.set("content-type", "text/plain");
+    ctx.response.body = ctx.appService.getHello();
+  })
+  .get("/me", requireSession, (ctx) => {
+    ctx.json({
+      id: ctx.user.id,
+      name: ctx.user.name,
+      email: ctx.user.email,
+      sessionExpiresAt: ctx.session.expiresAt,
+    });
+  });

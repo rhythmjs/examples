@@ -2,7 +2,7 @@
   "name": "rhythmjs-examples",
   "version": "0.0.1",
   "private": true,
-  "description": "Database examples for Rhythm on Bun: Drizzle, Prisma, and MikroORM on PostgreSQL, plus the native MongoDB driver.",
+  "description": "Examples for Rhythm on Bun: databases (Drizzle, Prisma, MikroORM, MongoDB) and integrations (AI SDK, Better Auth, Nodemailer, Redis, Resend, file upload, Scalar, Swagger UI).",
   "homepage": "https://rhythm.js.org",
   "license": "ISC",
   "repository": {
@@ -15,9 +15,10 @@
   ],
   "scripts": {
     "typecheck": "bun run --filter '*' typecheck",
-    "lint": "oxlint examples/*/src",
-    "fmt": "prettier --write \"examples/*/src/**/*.ts\" \"examples/*/*.ts\" \"examples/*/*.json\" \"*.json\"",
-    "fmt:check": "prettier --check \"examples/*/src/**/*.ts\" \"examples/*/*.ts\" \"examples/*/*.json\" \"*.json\"",
+    "test": "bun run --filter '*' test",
+    "lint": "oxlint examples/*/src examples/*/test",
+    "fmt": "prettier --write \"examples/*/src/**/*.ts\" \"examples/*/test/**/*.ts\" \"examples/*/*.ts\" \"examples/*/*.json\" \"*.json\"",
+    "fmt:check": "prettier --check \"examples/*/src/**/*.ts\" \"examples/*/test/**/*.ts\" \"examples/*/*.ts\" \"examples/*/*.json\" \"*.json\"",
     "check": "bun run fmt:check && bun run lint && bun run typecheck"
   },
   "trustedDependencies": [
@@ -25,6 +26,10 @@
     "@prisma/engines",
     "prisma"
   ],
+  "overrides": {
+    "@rhythmjs/rhythm": "file:../rhythm/packages/rhythm",
+    "@rhythmjs/openapi": "file:../openapi"
+  },
   "devDependencies": {
     "@types/bun": "^1.4.2",
     "@types/node": "^26.6.3",
