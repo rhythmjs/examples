@@ -34,7 +34,7 @@
       "name": "better-auth-example",
       "version": "0.0.1",
       "dependencies": {
-        "@rhythmjs/better-auth": "file:../../../better-auth",
+        "@rhythmjs/better-auth": "^0.0.2",
         "@rhythmjs/rhythm": "^0.0.13",
         "@rhythmjs/router": "^0.0.12",
         "better-auth": "^1.7.7",
@@ -404,6 +404,8 @@
 
     "@prisma/get-platform": ["@prisma/get-platform@6.19.3", "", { "dependencies": { "@prisma/debug": "6.19.3" } }, "sha512-xFj1VcJ1N3MKooOQAGO0W5tsd0W2QzIvW7DD7c/8H14Zmp4jseeWAITm+w2LLoLrlhoHdPPh0NMZ8mfL6puoHA=="],
 
+    "@rhythmjs/better-auth": ["@rhythmjs/better-auth@0.0.2", "", { "peerDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "@rhythmjs/security": "^0.0.6", "better-auth": "*" } }, "sha512-3wtM5xhhHNUw9RPQv4EESA5z59ioKtFFwF0tPd5TKtLxYg7HRFH4bQHC0gnLPxfuSjcYqkxpLE6kV+bTU3/QkA=="],
+
     "@rhythmjs/bullmq": ["@rhythmjs/bullmq@0.0.2", "", { "dependencies": { "bullmq": "^5.0.0" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.11" } }, "sha512-x66nnAAsAoLAgMoSP7wz71NKH1xPE0MbtTYLgdbLun2YtyJOgRDSVgWJgc9pF4uqLa3Oal/+nNBJmbBSsV/uKg=="],
 
     "@rhythmjs/config": ["@rhythmjs/config@0.0.1", "", { "dependencies": { "@standard-schema/spec": "^1.0.0" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.11" } }, "sha512-iJY9KbClumR3uvaps/zOhDlVYopAS689scupGy5S1evJyNAS6PScR3ffi3aEKZi9d286wainJjzOnMnOL8KV/g=="],
@@ -718,6 +720,12 @@
 
     "@esbuild-kit/core-utils/esbuild": ["esbuild@0.18.20", "", { "optionalDependencies": { "@esbuild/android-arm": "0.18.20", "@esbuild/android-arm64": "0.18.20", "@esbuild/android-x64": "0.18.20", "@esbuild/darwin-arm64": "0.18.20", "@esbuild/darwin-x64": "0.18.20", "@esbuild/freebsd-arm64": "0.18.20", "@esbuild/freebsd-x64": "0.18.20", "@esbuild/linux-arm": "0.18.20", "@esbuild/linux-arm64": "0.18.20", "@esbuild/linux-ia32": "0.18.20", "@esbuild/linux-loong64": "0.18.20", "@esbuild/linux-mips64el": "0.18.20", "@esbuild/linux-ppc64": "0.18.20", "@esbuild/linux-riscv64": "0.18.20", "@esbuild/linux-s390x": "0.18.20", "@esbuild/linux-x64": "0.18.20", "@esbuild/netbsd-x64": "0.18.20", "@esbuild/openbsd-x64": "0.18.20", "@esbuild/sunos-x64": "0.18.20", "@esbuild/win32-arm64": "0.18.20", "@esbuild/win32-ia32": "0.18.20", "@esbuild/win32-x64": "0.18.20" }, "bin": { "esbuild": "bin/esbuild" } }, "sha512-ceqxoedUrcayh7Y7ZX6NdbbDzGROiyVBgC4PriJThBKSVPWnnFHZAkfI1lJT8QFkOwH4qOS2SJkS4wvpGl8BpA=="],
 
+    "@rhythmjs/better-auth/@rhythmjs/http": ["@rhythmjs/http@file:../http", {}],
+
+    "@rhythmjs/better-auth/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "@rhythmjs/better-auth/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
+
     "@rhythmjs/bullmq/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
     "@rhythmjs/config/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
@@ -735,8 +743,6 @@
     "ai-sdk-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
     "ai-sdk-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
-
-    "better-auth-example/@rhythmjs/better-auth": ["@rhythmjs/better-auth@file:../better-auth", { "dependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/security": "^0.0.6" }, "devDependencies": { "@rhythmjs/rhythm": "0.0.12", "@rhythmjs/router": "^0.0.12", "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "better-auth": "^1.7.7", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "better-auth": "*" } }],
 
     "better-auth-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
@@ -865,12 +871,6 @@
     "@rhythmjs/security/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
     "ai-sdk-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "better-auth-example/@rhythmjs/better-auth/@rhythmjs/http": ["@rhythmjs/http@file:../http", {}],
-
-    "better-auth-example/@rhythmjs/better-auth/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "better-auth-example/@rhythmjs/better-auth/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
 
     "better-auth-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
