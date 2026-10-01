@@ -41,8 +41,8 @@ integration adds. Each README lists exactly what was added.
 | [`examples/nodemailer`](examples/nodemailer)   | Nodemailer over SMTP (Mailpit) or a JSON transport                        | 3009 | nothing (Mailpit optional)                 |
 | [`examples/redis`](examples/redis)             | Bun `RedisClient` cache-aside                                             | 3011 | Redis                                      |
 | [`examples/resend`](examples/resend)           | Resend email API                                                          | 3010 | `RESEND_API_KEY` to run (tests use a fake) |
-| [`examples/scalar`](examples/scalar)           | `@rhythmjs/openapi` + Scalar reference                                    | 3005 | nothing                                    |
-| [`examples/swagger-ui`](examples/swagger-ui)   | `@rhythmjs/openapi` + Swagger UI                                          | 3006 | nothing                                    |
+| [`examples/scalar`](examples/scalar)           | `@rhythmjs/openapi` + `@rhythmjs/scalar`                                  | 3005 | nothing                                    |
+| [`examples/swagger-ui`](examples/swagger-ui)   | `@rhythmjs/openapi` + `@rhythmjs/swagger`                                 | 3006 | nothing                                    |
 
 `bun run test` runs every spec. The ones that need a service skip themselves with a message when it is not reachable.
 

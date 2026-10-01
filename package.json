@@ -27,8 +27,12 @@
     "prisma"
   ],
   "overrides": {
+    "@rhythmjs/http": "file:../http",
+    "@rhythmjs/openapi": "file:../openapi/packages/openapi",
     "@rhythmjs/rhythm": "file:../rhythm/packages/rhythm",
-    "@rhythmjs/openapi": "file:../openapi"
+    "@rhythmjs/router": "file:../rhythm/packages/router",
+    "@rhythmjs/scalar": "file:../openapi/packages/scalar",
+    "@rhythmjs/swagger": "file:../openapi/packages/swagger"
   },
   "devDependencies": {
     "@types/bun": "^1.4.2",

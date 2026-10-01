@@ -4,11 +4,11 @@ Built from the [template](https://github.com/rhythmjs/template): its `app.module
 
 ## What is added to the template
 
-- `bun add @rhythmjs/openapi`
+- `bun add @rhythmjs/openapi @rhythmjs/swagger @rhythmjs/http`
 - `src/app.controller.ts`: `GET /` is described with `apiOperation` and `apiResponse`.
-- `src/app.module.ts`: `apiReference({ ui: "swagger" })` swaps the reference page; the document from `apiDocument` is unchanged. `swagger: { docExpansion: "none", persistAuthorization: true }` is merged into `SwaggerUIBundle`.
+- `src/app.module.ts`: `openapiModule.forRoot` serves only the document, at `/openapi.json`; `swaggerModule.forRoot()` serves the Swagger UI page at `/docs`, loading it.
 
-Each `apiReference` answers only its own path, so two with different `path` options offer both UIs. Swagger UI loads from a CDN (`unpkg.com`, with subresource integrity), so the browser needs network access.
+Swagger UI loads from a CDN (`unpkg.com`, with subresource integrity), so the browser needs network access. `path` and `url` on `swaggerModule.forRoot` move the page and point it at another spec URL.
 
 ## Run
 

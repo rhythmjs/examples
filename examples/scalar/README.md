@@ -1,14 +1,14 @@
 # scalar-example
 
-Built from the [template](https://github.com/rhythmjs/template): its `app.module.ts`, `app.controller.ts`, `app.service.ts`, `main.ts` and tests, plus a [Scalar](https://scalar.com) API reference served from the OpenAPI document that `@rhythmjs/openapi` generates for its routes.
+Built from the [template](https://github.com/rhythmjs/template): its `app.module.ts`, `app.controller.ts`, `app.service.ts`, `main.ts` and tests, plus a [Scalar](https://scalar.com) API reference over the OpenAPI document that `@rhythmjs/openapi` generates for its routes.
 
 ## What is added to the template
 
-- `bun add @rhythmjs/openapi`
+- `bun add @rhythmjs/openapi @rhythmjs/scalar @rhythmjs/http`
 - `src/app.controller.ts`: `GET /` carries its own documentation with `apiOperation` and `apiResponse`, which are ordinary middleware, so the router stays the single source of truth.
-- `src/app.module.ts`: `apiDocument` serves the document at `/openapi.json`, a second `apiDocument` with `format: "yaml"` serves the same document at `/openapi.yaml`, and `apiReference` serves the Scalar page at `/docs`, loading the YAML one. `scalar: { theme: "purple" }` passes Scalar's own configuration through. All before the controller.
+- `src/app.module.ts`: `openapiModule.forRoot` finds the router on its own and serves only the document, at `/openapi.json`. `scalarModule.forRoot()` is a separate module that serves the Scalar page at `/docs`, loading that document. Both are registered before the controller.
 
-Scalar loads from a CDN (`cdn.jsdelivr.net`), so the browser needs network access to render the page.
+Scalar loads from a CDN (`cdn.jsdelivr.net`), so the browser needs network access to render the page. `path` and `url` on `scalarModule.forRoot` move the page and point it at another spec URL.
 
 ## Run
 
@@ -25,7 +25,6 @@ bun run dev    # http://localhost:3005
 ```sh
 open http://localhost:3005/docs          # the Scalar reference
 curl http://localhost:3005/openapi.json  # the generated document
-curl http://localhost:3005/openapi.yaml  # the same document as YAML
 ```
 
 ## Test

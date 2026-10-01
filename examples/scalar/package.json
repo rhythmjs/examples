@@ -11,9 +11,11 @@
     "test:e2e": "bun test ./test/*.e2e-spec.ts"
   },
   "dependencies": {
-    "@rhythmjs/openapi": "^0.0.4",
+    "@rhythmjs/http": "^0.0.8",
+    "@rhythmjs/openapi": "^0.0.5",
     "@rhythmjs/rhythm": "^0.0.13",
-    "@rhythmjs/router": "^0.0.12"
+    "@rhythmjs/router": "^0.0.12",
+    "@rhythmjs/scalar": "^0.0.5"
   },
   "devDependencies": {
     "@rhythmjs/testing": "^0.0.2",

@@ -179,9 +179,11 @@
       "name": "scalar-example",
       "version": "0.0.1",
       "dependencies": {
-        "@rhythmjs/openapi": "^0.0.4",
+        "@rhythmjs/http": "^0.0.8",
+        "@rhythmjs/openapi": "^0.0.5",
         "@rhythmjs/rhythm": "^0.0.13",
         "@rhythmjs/router": "^0.0.12",
+        "@rhythmjs/scalar": "^0.0.5",
       },
       "devDependencies": {
         "@rhythmjs/testing": "^0.0.2",
@@ -194,9 +196,11 @@
       "name": "swagger-ui-example",
       "version": "0.0.1",
       "dependencies": {
-        "@rhythmjs/openapi": "^0.0.4",
+        "@rhythmjs/http": "^0.0.8",
+        "@rhythmjs/openapi": "^0.0.5",
         "@rhythmjs/rhythm": "^0.0.13",
         "@rhythmjs/router": "^0.0.12",
+        "@rhythmjs/swagger": "^0.0.5",
       },
       "devDependencies": {
         "@rhythmjs/testing": "^0.0.2",
@@ -212,8 +216,12 @@
     "@prisma/client",
   ],
   "overrides": {
-    "@rhythmjs/openapi": "file:../openapi",
+    "@rhythmjs/http": "file:../http",
+    "@rhythmjs/openapi": "file:../openapi/packages/openapi",
     "@rhythmjs/rhythm": "file:../rhythm/packages/rhythm",
+    "@rhythmjs/router": "file:../rhythm/packages/router",
+    "@rhythmjs/scalar": "file:../openapi/packages/scalar",
+    "@rhythmjs/swagger": "file:../openapi/packages/swagger",
   },
   "packages": {
     "@ai-sdk/gateway": ["@ai-sdk/gateway@4.0.102", "", { "dependencies": { "@ai-sdk/provider": "4.0.21", "@ai-sdk/provider-utils": "5.0.53", "@vercel/oidc": "3.2.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-kAVldt8D2AVSs7BjBZTRWHcFF71lPH8ouS6/QVlFCnKcUsShjXMdRwW6es5BfxyGewHbXfSirSc8j6efKSkIdA=="],
@@ -376,11 +384,7 @@
 
     "@rhythmjs/config": ["@rhythmjs/config@0.0.1", "", { "dependencies": { "@standard-schema/spec": "^1.0.0" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.11" } }, "sha512-iJY9KbClumR3uvaps/zOhDlVYopAS689scupGy5S1evJyNAS6PScR3ffi3aEKZi9d286wainJjzOnMnOL8KV/g=="],
 
-    "@rhythmjs/http": ["@rhythmjs/http@0.0.8", "", { "dependencies": { "rou3": "^0.11.0" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.13", "@rhythmjs/router": "^0.0.12", "i18next": "*" }, "optionalPeers": ["i18next"] }, "sha512-dBvici1C6vZ4esCxZOmN9lel9n14Fm3qUJQnRtziRn4lpzucM3uHRJx4eu1Uqa7Gkzazhy/DoGrrmeewmxnIwQ=="],
-
     "@rhythmjs/middleware": ["@rhythmjs/middleware@0.0.5", "", { "dependencies": { "@standard-schema/spec": "^1.0.0" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11" } }, "sha512-UBSRDAbqf+gxd7su6InLDet8yz4hrENZvbOGwo9fs1wit3mwA36vex3usBZa9n+QK67GgdWSq02UTNLnr6PQXQ=="],
-
-    "@rhythmjs/router": ["@rhythmjs/router@0.0.12", "", { "dependencies": { "@rhythmjs/rhythm": "0.0.12", "rou3": "^0.11.0" } }, "sha512-rrPr9zZ4G1BMj0aqQE/OLORpbOEaONNZnNQAIsE0mR5LglbRqavaT/FvU2ic3HG3AN0wd0qxjW/Iilq5TP0pHQ=="],
 
     "@rhythmjs/security": ["@rhythmjs/security@0.0.6", "", { "peerDependencies": { "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11" } }, "sha512-ZFs9zWRgiKzAWiFgH3GUl6L35JUO8Njxzt2IiELjkG+1WACxMwpLjShXAh9aZo0w6yme3sDEPnDiHCrp+1PnEg=="],
 
@@ -391,6 +395,16 @@
     "@rushstack/terminal": ["@rushstack/terminal@0.15.2", "", { "dependencies": { "@rushstack/node-core-library": "5.13.0", "supports-color": "~8.1.1" }, "peerDependencies": { "@types/node": "*" }, "optionalPeers": ["@types/node"] }, "sha512-7Hmc0ysK5077R/IkLS9hYu0QuNafm+TbZbtYVzCMbeOdMjaRboLKrhryjwZSRJGJzu+TV1ON7qZHeqf58XfLpA=="],
 
     "@rushstack/ts-command-line": ["@rushstack/ts-command-line@4.23.7", "", { "dependencies": { "@rushstack/terminal": "0.15.2", "@types/argparse": "1.0.38", "argparse": "~1.0.9", "string-argv": "~0.3.1" } }, "sha512-Gr9cB7DGe6uz5vq2wdr89WbVDKz0UeuFEn5H2CfWDe7JvjFFaiV15gi6mqDBTbHhHCWS7w8mF1h3BnIfUndqdA=="],
+
+    "@scalar/client-side-rendering": ["@scalar/client-side-rendering@0.4.7", "", { "dependencies": { "@scalar/helpers": "0.16.0", "@scalar/schemas": "0.12.2", "@scalar/types": "0.22.3", "@scalar/validation": "0.6.5" } }, "sha512-iBn6B92M0p59K3PQUTawvolK5UlfuMdxuBJt59g0as3HCbNm4m2KpTh0tTj5Y2XQpslv9nN6q0jJEseVdtDayA=="],
+
+    "@scalar/helpers": ["@scalar/helpers@0.16.0", "", {}, "sha512-lCBNB3hN8sGfUghz5AK5r63G+1/x4PHSgjH9asJVWne5e1tnKkti5eaejPLgy8didpAZsyXEp744xIosoWu9AA=="],
+
+    "@scalar/schemas": ["@scalar/schemas@0.12.2", "", { "dependencies": { "@scalar/helpers": "0.16.0", "@scalar/validation": "0.6.5" } }, "sha512-LIqqT0G7Chj57h1XY1FC3mOJriqNvPOg41V8NOsWGP/VCHCL/lg6K+D3ejwUg4mYNR3TTYaQARlr630mzqKgDA=="],
+
+    "@scalar/types": ["@scalar/types@0.22.3", "", { "dependencies": { "@scalar/helpers": "0.16.0", "nanoid": "^5.1.6", "type-fest": "^5.8.0", "zod": "^4.4.3" } }, "sha512-Ai+NPBJPhuvqkR5EXsJPK7RAnP7SBhSOyxEhuGqShgUutHoMQ7Vl7tvzVvhuqbXvtAxdBUEhUe57B6kI8Xg+dg=="],
+
+    "@scalar/validation": ["@scalar/validation@0.6.5", "", {}, "sha512-t/dtbqesbOLsTusFI2kXfiFEQOiZC7+oAY+jZnE82Y64xLamo/1KrZpta8GkuAfIHyeOHOx5bDFid04eO13MIg=="],
 
     "@stablelib/base64": ["@stablelib/base64@1.0.1", "", {}, "sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ=="],
 
@@ -572,6 +586,8 @@
 
     "hasown": ["hasown@2.0.4", "", { "dependencies": { "function-bind": "^1.1.2" } }, "sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A=="],
 
+    "i18next": ["i18next@26.4.2", "", { "peerDependencies": { "typescript": "^5 || ^6 || ^7" }, "optionalPeers": ["typescript"] }, "sha512-RX+R0VLg13IbvRuJSxnqykUFS9vQZTl8wYpWPCIUDWVrSGjsQywB5Y+pjzrkboxGAuYfJZVH1InFTdgBdxq6ug=="],
+
     "ignore": ["ignore@5.3.2", "", {}, "sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g=="],
 
     "import-lazy": ["import-lazy@4.0.0", "", {}, "sha512-rKtvo6a868b5Hu3heneU+L4yEQ4jYKLtjpnPeUdK7h0yzXGmyBTypknlkCvHFBqfX9YlorEiMM6Dnq/5atfHkw=="],
@@ -623,6 +639,8 @@
     "mongodb-example": ["mongodb-example@workspace:examples/mongodb"],
 
     "ms": ["ms@2.1.2", "", {}, "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="],
+
+    "nanoid": ["nanoid@5.1.16", "", { "bin": { "nanoid": "bin/nanoid.js" } }, "sha512-kVrnsrJqMR8+oLJnGEmSWw9BivK5mt7H3FZatVRjrc5wGqFYuBxX1yG7+A7Gi5AefkX6t/oCkizcQgpu0cY1dQ=="],
 
     "nanostores": ["nanostores@1.5.4", "", {}, "sha512-4UXY7OAJEK0Y6V3SudBU7cXjAzTDc189R78dDOh0Xbm19gpKYto6WizSg58LJf12lTsRxKSLGyE117OiLpM4DQ=="],
 
@@ -748,6 +766,8 @@
 
     "swagger-ui-example": ["swagger-ui-example@workspace:examples/swagger-ui"],
 
+    "tagged-tag": ["tagged-tag@1.0.0", "", {}, "sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng=="],
+
     "tarn": ["tarn@3.1.2", "", {}, "sha512-3RTvqKZcK/17jnJ8rMKFXbyNogywTs1z0gVPPwFsJGX46rkmUHOdIaSQ/aVO1rS7nH+soiXiWk7rvUXxndm8Dg=="],
 
     "tildify": ["tildify@2.0.0", "", {}, "sha512-Cc+OraorugtXNfs50hU9KS369rFXCfgGLpfCfvlc+Ud5u6VWmUQsOAa9HbTvheQdYnrdJqqv1e5oIqXppMYnSw=="],
@@ -786,25 +806,29 @@
 
     "@esbuild-kit/core-utils/esbuild": ["esbuild@0.18.20", "", { "optionalDependencies": { "@esbuild/android-arm": "0.18.20", "@esbuild/android-arm64": "0.18.20", "@esbuild/android-x64": "0.18.20", "@esbuild/darwin-arm64": "0.18.20", "@esbuild/darwin-x64": "0.18.20", "@esbuild/freebsd-arm64": "0.18.20", "@esbuild/freebsd-x64": "0.18.20", "@esbuild/linux-arm": "0.18.20", "@esbuild/linux-arm64": "0.18.20", "@esbuild/linux-ia32": "0.18.20", "@esbuild/linux-loong64": "0.18.20", "@esbuild/linux-mips64el": "0.18.20", "@esbuild/linux-ppc64": "0.18.20", "@esbuild/linux-riscv64": "0.18.20", "@esbuild/linux-s390x": "0.18.20", "@esbuild/linux-x64": "0.18.20", "@esbuild/netbsd-x64": "0.18.20", "@esbuild/openbsd-x64": "0.18.20", "@esbuild/sunos-x64": "0.18.20", "@esbuild/win32-arm64": "0.18.20", "@esbuild/win32-ia32": "0.18.20", "@esbuild/win32-x64": "0.18.20" }, "bin": { "esbuild": "bin/esbuild" } }, "sha512-ceqxoedUrcayh7Y7ZX6NdbbDzGROiyVBgC4PriJThBKSVPWnnFHZAkfI1lJT8QFkOwH4qOS2SJkS4wvpGl8BpA=="],
 
-    "@rhythmjs/config/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+    "@rhythmjs/config/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
-    "@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+    "@rhythmjs/middleware/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
-    "@rhythmjs/middleware/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+    "@rhythmjs/middleware/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
-    "@rhythmjs/middleware/@rhythmjs/router": ["@rhythmjs/router@0.0.11", "", { "dependencies": { "@rhythmjs/rhythm": "0.0.11", "rou3": "^0.11.0" } }, "sha512-FyOgZJOBbOTWs4+b7xasz7Jfe3GqurzQ3diV2qjOv4phV8t68TwrkufJgVje75fcYUzVv3/AxhXikqF6w23JdA=="],
+    "@rhythmjs/security/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
-    "@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+    "@rhythmjs/security/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
-    "@rhythmjs/security/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+    "@rhythmjs/testing/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
-    "@rhythmjs/security/@rhythmjs/router": ["@rhythmjs/router@0.0.11", "", { "dependencies": { "@rhythmjs/rhythm": "0.0.11", "rou3": "^0.11.0" } }, "sha512-FyOgZJOBbOTWs4+b7xasz7Jfe3GqurzQ3diV2qjOv4phV8t68TwrkufJgVje75fcYUzVv3/AxhXikqF6w23JdA=="],
-
-    "@rhythmjs/testing/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+    "@scalar/types/type-fest": ["type-fest@5.10.0", "", { "dependencies": { "tagged-tag": "^1.0.0" } }, "sha512-NoSdpq/WEiAg5sjmBkmV/hfxv6HJH4NqPNrqjtSO5CwRmpsDfaf4begxW34KdJykH/l1yHtwBWQkCRdoXO8mPA=="],
 
     "ai-sdk-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
+    "ai-sdk-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "better-auth-example/@rhythmjs/http": ["@rhythmjs/http@file:../http", { "dependencies": { "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "i18next": "^26.4.2", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.13", "@rhythmjs/router": "^0.0.12", "i18next": "*" }, "optionalPeers": ["i18next"] }],
+
     "better-auth-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "better-auth-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
     "better-call/@better-auth/utils": ["@better-auth/utils@0.5.0", "", { "dependencies": { "@noble/hashes": "^2.0.1" } }, "sha512-BL8W4EfIZFwlu0r54m3v1ztjDhu6dDe/amLTm0xybmbZaNgYUqhD3SjpAsnq0q8YD6/ki4iwIgxJNLP/N3TxiA=="],
 
@@ -814,15 +838,27 @@
 
     "drizzle-postgres-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
+    "drizzle-postgres-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "file-upload-example/@rhythmjs/http": ["@rhythmjs/http@file:../http", { "dependencies": { "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "i18next": "^26.4.2", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.13", "@rhythmjs/router": "^0.0.12", "i18next": "*" }, "optionalPeers": ["i18next"] }],
+
     "file-upload-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "file-upload-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
     "knex/pg-connection-string": ["pg-connection-string@2.6.2", "", {}, "sha512-ch6OwaeaPYcova4kKZ15sbJ2hKb/VP48ZD2gE7i1J+L4MspCtBMAx8nMgz7bksc7IojCIIWuEhHibSMFH8m8oA=="],
 
     "mikro-orm-postgres-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
+    "mikro-orm-postgres-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
     "mongodb-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
+    "mongodb-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
     "nodemailer-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "nodemailer-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
     "nypm/citty": ["citty@0.2.2", "", {}, "sha512-+6vJA3L98yv+IdfKGZHBNiGW5KHn22e/JwID0Strsz8h4S/csAu/OuICwxrg44k5MRiZHWIo8XXuJgQTriRP4w=="],
 
@@ -836,17 +872,35 @@
 
     "prisma-postgres-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
+    "prisma-postgres-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
     "redis-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "redis-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
     "resend-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
-    "scalar-example/@rhythmjs/openapi": ["@rhythmjs/openapi@file:../openapi", { "dependencies": { "@standard-schema/spec": "^1.1.0" }, "devDependencies": { "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2", "zod": "^4.6.5" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "zod": "^4.2.0" }, "optionalPeers": ["zod"] }],
+    "resend-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "scalar-example/@rhythmjs/http": ["@rhythmjs/http@file:../http", { "dependencies": { "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "i18next": "^26.4.2", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.13", "@rhythmjs/router": "^0.0.12", "i18next": "*" }, "optionalPeers": ["i18next"] }],
+
+    "scalar-example/@rhythmjs/openapi": ["@rhythmjs/openapi@file:../openapi/packages/openapi", { "dependencies": { "@standard-schema/spec": "^1.1.0" }, "devDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.12", "@rhythmjs/router": "^0.0.12", "zod": "^4.6.5" }, "peerDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "zod": "^4.2.0" }, "optionalPeers": ["zod"] }],
 
     "scalar-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
-    "swagger-ui-example/@rhythmjs/openapi": ["@rhythmjs/openapi@file:../openapi", { "dependencies": { "@standard-schema/spec": "^1.1.0" }, "devDependencies": { "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2", "zod": "^4.6.5" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "zod": "^4.2.0" }, "optionalPeers": ["zod"] }],
+    "scalar-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "scalar-example/@rhythmjs/scalar": ["@rhythmjs/scalar@file:../openapi/packages/scalar", { "dependencies": { "@scalar/client-side-rendering": "^0.4.7" }, "devDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.12", "@rhythmjs/router": "^0.0.12" }, "peerDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11" } }],
+
+    "swagger-ui-example/@rhythmjs/http": ["@rhythmjs/http@file:../http", { "dependencies": { "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "i18next": "^26.4.2", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.13", "@rhythmjs/router": "^0.0.12", "i18next": "*" }, "optionalPeers": ["i18next"] }],
+
+    "swagger-ui-example/@rhythmjs/openapi": ["@rhythmjs/openapi@file:../openapi/packages/openapi", { "dependencies": { "@standard-schema/spec": "^1.1.0" }, "devDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.12", "@rhythmjs/router": "^0.0.12", "zod": "^4.6.5" }, "peerDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "zod": "^4.2.0" }, "optionalPeers": ["zod"] }],
 
     "swagger-ui-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "swagger-ui-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
+
+    "swagger-ui-example/@rhythmjs/swagger": ["@rhythmjs/swagger@file:../openapi/packages/swagger", { "devDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.12", "@rhythmjs/router": "^0.0.12" }, "peerDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11" } }],
 
     "tsx/esbuild": ["esbuild@0.28.2", "", { "optionalDependencies": { "@esbuild/aix-ppc64": "0.28.2", "@esbuild/android-arm": "0.28.2", "@esbuild/android-arm64": "0.28.2", "@esbuild/android-x64": "0.28.2", "@esbuild/darwin-arm64": "0.28.2", "@esbuild/darwin-x64": "0.28.2", "@esbuild/freebsd-arm64": "0.28.2", "@esbuild/freebsd-x64": "0.28.2", "@esbuild/linux-arm": "0.28.2", "@esbuild/linux-arm64": "0.28.2", "@esbuild/linux-ia32": "0.28.2", "@esbuild/linux-loong64": "0.28.2", "@esbuild/linux-mips64el": "0.28.2", "@esbuild/linux-ppc64": "0.28.2", "@esbuild/linux-riscv64": "0.28.2", "@esbuild/linux-s390x": "0.28.2", "@esbuild/linux-x64": "0.28.2", "@esbuild/netbsd-arm64": "0.28.2", "@esbuild/netbsd-x64": "0.28.2", "@esbuild/openbsd-arm64": "0.28.2", "@esbuild/openbsd-x64": "0.28.2", "@esbuild/openharmony-arm64": "0.28.2", "@esbuild/sunos-x64": "0.28.2", "@esbuild/win32-arm64": "0.28.2", "@esbuild/win32-ia32": "0.28.2", "@esbuild/win32-x64": "0.28.2" }, "bin": { "esbuild": "bin/esbuild" } }, "sha512-HKVLS8dvII+xoKW9kmqxbRKrnWEXfJJr/FZhhJmiqIB0e053QNYFqOBouTMO/k5sID4MvCiUCvv8b9M4h32wIA=="],
 
@@ -898,13 +952,69 @@
 
     "@rhythmjs/security/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
+    "ai-sdk-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "better-auth-example/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "better-auth-example/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
+
+    "better-auth-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "drizzle-postgres-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "file-upload-example/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "file-upload-example/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
+
+    "file-upload-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "mikro-orm-postgres-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "mongodb-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "nodemailer-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "prisma-postgres-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "redis-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "resend-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "scalar-example/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "scalar-example/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
+
+    "scalar-example/@rhythmjs/openapi/@rhythmjs/http": ["@rhythmjs/http@file:../http", {}],
+
     "scalar-example/@rhythmjs/openapi/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
-    "scalar-example/@rhythmjs/openapi/@rhythmjs/router": ["@rhythmjs/router@0.0.11", "", { "dependencies": { "@rhythmjs/rhythm": "0.0.11", "rou3": "^0.11.0" } }, "sha512-FyOgZJOBbOTWs4+b7xasz7Jfe3GqurzQ3diV2qjOv4phV8t68TwrkufJgVje75fcYUzVv3/AxhXikqF6w23JdA=="],
+    "scalar-example/@rhythmjs/openapi/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
+
+    "scalar-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "scalar-example/@rhythmjs/scalar/@rhythmjs/http": ["@rhythmjs/http@file:../http", {}],
+
+    "scalar-example/@rhythmjs/scalar/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "scalar-example/@rhythmjs/scalar/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
+
+    "swagger-ui-example/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "swagger-ui-example/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
+
+    "swagger-ui-example/@rhythmjs/openapi/@rhythmjs/http": ["@rhythmjs/http@file:../http", {}],
 
     "swagger-ui-example/@rhythmjs/openapi/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
-    "swagger-ui-example/@rhythmjs/openapi/@rhythmjs/router": ["@rhythmjs/router@0.0.11", "", { "dependencies": { "@rhythmjs/rhythm": "0.0.11", "rou3": "^0.11.0" } }, "sha512-FyOgZJOBbOTWs4+b7xasz7Jfe3GqurzQ3diV2qjOv4phV8t68TwrkufJgVje75fcYUzVv3/AxhXikqF6w23JdA=="],
+    "swagger-ui-example/@rhythmjs/openapi/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
+
+    "swagger-ui-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "swagger-ui-example/@rhythmjs/swagger/@rhythmjs/http": ["@rhythmjs/http@file:../http", {}],
+
+    "swagger-ui-example/@rhythmjs/swagger/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
+
+    "swagger-ui-example/@rhythmjs/swagger/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
 
     "tsx/esbuild/@esbuild/aix-ppc64": ["@esbuild/aix-ppc64@0.28.2", "", { "os": "aix", "cpu": "ppc64" }, "sha512-XExcO+dvLKvVtNTibSTBej1NCAbaGhWn9Ww1ZPx80qsahhPFe/8jgWP0IchNe0F3HwkU7n8ejhH8bjonqht8mQ=="],
 
@@ -957,9 +1067,5 @@
     "tsx/esbuild/@esbuild/win32-ia32": ["@esbuild/win32-ia32@0.28.2", "", { "os": "win32", "cpu": "ia32" }, "sha512-YmJbfTlvU7Sdn9BB+4PRES4oB6pxgS37MAONj+hBr/cpXS1aBPKXxNnDbu+QCWPj0o9dgyxeq79g6c5P8KeuYA=="],
 
     "tsx/esbuild/@esbuild/win32-x64": ["@esbuild/win32-x64@0.28.2", "", { "os": "win32", "cpu": "x64" }, "sha512-5ebpxr3nWMzrL/rnUI755Jkuee0bHL/Gq0WTF9lvcpv73wAp5eu8MfBUgWK9bhWvZjj7yX8etf/8tI8Ney695g=="],
-
-    "scalar-example/@rhythmjs/openapi/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "swagger-ui-example/@rhythmjs/openapi/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
   }
 }

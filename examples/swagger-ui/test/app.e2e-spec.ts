@@ -41,11 +41,4 @@ describe("AppController (e2e)", () => {
     expect(html).toContain("swagger-ui-bundle.js");
     expect(html).toContain("/openapi.json");
   });
-
-  test("/docs (GET) passes Swagger UI's options through", async () => {
-    const html = await (await app(new Request("http://localhost/docs"))).text();
-
-    expect(html).toContain('"docExpansion":"none"');
-    expect(html).toContain('"persistAuthorization":true');
-  });
 });

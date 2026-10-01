@@ -39,24 +39,6 @@ describe("AppController (e2e)", () => {
     expect(res.headers.get("content-type")).toContain("text/html");
     const html = await res.text();
     expect(html).toContain("@scalar/api-reference");
-    expect(html).toContain("/openapi.yaml");
-  });
-
-  test("/openapi.yaml (GET) serves the same document as YAML", async () => {
-    const res = await app(new Request("http://localhost/openapi.yaml"));
-
-    expect(res.status).toBe(200);
-    expect(res.headers.get("content-type")).toContain("application/yaml");
-    const text = await res.text();
-    expect(text).toContain("openapi: 3.1.2");
-    const json = await (await app(new Request("http://localhost/openapi.json"))).json();
-    expect(Bun.YAML.parse(text)).toEqual(json as never);
-  });
-
-  test("/docs (GET) loads the YAML document and applies Scalar's theme", async () => {
-    const html = await (await app(new Request("http://localhost/docs"))).text();
-
-    expect(html).toContain('data-url="/openapi.yaml"');
-    expect(html).toContain("&quot;theme&quot;:&quot;purple&quot;");
+    expect(html).toContain("/openapi.json");
   });
 });
