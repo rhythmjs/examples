@@ -2,7 +2,7 @@
   "name": "rhythmjs-examples",
   "version": "0.0.1",
   "private": true,
-  "description": "Examples for Rhythm on Bun: databases (Drizzle, Prisma, MikroORM, MongoDB) and integrations (AI SDK, Better Auth, Nodemailer, Redis, Resend, file upload, Scalar, Swagger UI).",
+  "description": "Examples for Rhythm on Bun: databases (Drizzle, Prisma, MikroORM, MongoDB) and integrations (AI SDK, Better Auth, Nodemailer, Redis, Resend, file upload, Scalar, Swagger UI, BullMQ).",
   "homepage": "https://rhythm.js.org",
   "license": "ISC",
   "repository": {

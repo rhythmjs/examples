@@ -37,6 +37,7 @@ integration adds. Each README lists exactly what was added.
 | ---------------------------------------------- | ------------------------------------------------------------------------- | ---- | ------------------------------------------ |
 | [`examples/ai-sdk`](examples/ai-sdk)           | Vercel AI SDK: streaming chat, summary, model swap via `@rhythmjs/config` | 3008 | `OPENAI_API_KEY` to run (tests use a mock) |
 | [`examples/better-auth`](examples/better-auth) | Better Auth (email + password) on Bun SQLite                              | 3007 | nothing                                    |
+| [`examples/bullmq`](examples/bullmq)           | `@rhythmjs/bullmq`: typed job queue and worker on BullMQ                  | 3013 | Redis                                      |
 | [`examples/file-upload`](examples/file-upload) | `multipart` uploads to disk and to S3 (MinIO)                             | 3012 | MinIO for the S3 route                     |
 | [`examples/nodemailer`](examples/nodemailer)   | Nodemailer over SMTP (Mailpit) or a JSON transport                        | 3009 | nothing (Mailpit optional)                 |
 | [`examples/redis`](examples/redis)             | Bun `RedisClient` cache-aside                                             | 3011 | Redis                                      |

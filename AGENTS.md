@@ -3,7 +3,7 @@
 This is a Bun workspace (`examples/*`) built entirely with Bun tooling; there is no Vite+, Turborepo, or pnpm here.
 Each workspace is a self-contained app on the Rhythm kernel: notes CRUD with a different database stack (Drizzle, Prisma,
 MikroORM on PostgreSQL; the native MongoDB driver), or one integration recipe (AI SDK, Better Auth, Nodemailer, Redis,
-Resend, file upload, Scalar, Swagger UI) that the docs at https://rhythm.js.org/integrations/ link to. The integration
+Resend, file upload, Scalar, Swagger UI, BullMQ) that the docs at https://rhythm.js.org/integrations/ link to. The integration
 examples are the starter template (app.module/app.controller/app.service/main + a unit spec and an e2e spec in test/) plus only
 what the integration adds; do not rebuild them as bespoke apps. Do not wrap a module in a factory to inject a dependency: wrap a
 service (a plain object the module provides) and stub it in tests, or pass the value through `@rhythmjs/config`.
