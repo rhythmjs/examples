@@ -3,8 +3,15 @@ import { runHttpMiddleware } from "@rhythmjs/testing/router";
 import { appController } from "./app.controller";
 import { appService } from "./app.service";
 
-const run = (path: string, service: typeof appService = appService) =>
-  runHttpMiddleware(appController.middleware(), path, { appService: service, session: null, user: null });
+const authStub = (result: unknown) => ({ api: { getSession: async () => result } }) as never;
+
+const run = (path: string, service: typeof appService = appService, result: unknown = null) =>
+  runHttpMiddleware(appController.middleware(), path, {
+    appService: service,
+    auth: authStub(result),
+    session: null,
+    user: null,
+  });
 
 describe("AppController", () => {
   test("GET / responds 200 with the service greeting", async () => {
@@ -39,11 +46,7 @@ describe("AppController", () => {
   test("GET /me answers with the signed-in user", async () => {
     const user = { id: "u1", name: "Ada", email: "ada@example.com" };
     const session = { expiresAt: new Date("2030-01-01T00:00:00.000Z") };
-    const { response } = await runHttpMiddleware(appController.middleware(), "/me", {
-      appService,
-      session: session as never,
-      user: user as never,
-    });
+    const { response } = await run("/me", appService, { session, user });
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ ...user, sessionExpiresAt: "2030-01-01T00:00:00.000Z" });

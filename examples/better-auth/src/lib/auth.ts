@@ -13,11 +13,6 @@ export const auth = betterAuth({
   emailAndPassword: { enabled: true },
 });
 
-type AuthSession = typeof auth.$Infer.Session;
-
-export type User = AuthSession["user"];
-export type Session = AuthSession["session"];
-
 export function closeAuthDatabase(): void {
   database.close();
 }

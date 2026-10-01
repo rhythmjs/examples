@@ -4,11 +4,11 @@ Built from the [template](https://github.com/rhythmjs/template): its `app.module
 
 ## What is added to the template
 
-- `bun add better-auth @rhythmjs/http @rhythmjs/security`
+- `bun add better-auth @rhythmjs/better-auth @rhythmjs/security`
 - `src/lib/auth.ts`: the Better Auth instance; the frontend origin (`FRONTEND_URL`, default `http://localhost:3001`) is in `trustedOrigins`, which checks origins separately from CORS.
-- `src/lib/session.ts`: Better Auth based middleware. `withSession` puts the session and user on the context from `auth.api.getSession`, and `requireSession` answers 401 when there is none and narrows `ctx.session` and `ctx.user` for the handler.
+- [`@rhythmjs/better-auth`](https://www.npmjs.com/package/@rhythmjs/better-auth): `betterAuthModule.forRoot({ auth, path })` mounts Better Auth's handler and provides `auth`, `withSession()` puts `session` and `user` on the context (`null` when anonymous), and `requireSession()` answers 401 when there is none and narrows both for the handler. Both middlewares read `ctx.auth`, which the app module exports from the better-auth module.
 - `src/lib/migrate.ts`: creates Better Auth's tables (`bun run db:migrate`; `bun run dev` also runs it at startup).
-- `src/app.module.ts`: `cors()`, then `mount("/api/auth/**", (ctx) => auth.handler(ctx.request))` from `@rhythmjs/http/mount`, then `withSession`, all before the controller. CORS comes first so preflights are answered and Better Auth's own responses carry the headers.
+- `src/app.module.ts`: `cors()`, then `betterAuthModule.forRoot({ auth, path: "/api/auth" })` (exporting `auth`) and `withSession()`, all before the controller. CORS comes first so preflights are answered and Better Auth's own responses carry the headers.
 - `src/app.controller.ts`: `GET /me`, guarded per route with `requireSession`.
 
 Set `BETTER_AUTH_SECRET` and `BETTER_AUTH_URL` outside local runs. `AUTH_DB` changes the SQLite file.

@@ -1,9 +1,10 @@
+import { requireSession, type AuthContext, type SessionContext } from "@rhythmjs/better-auth";
 import { RhythmRouter } from "@rhythmjs/router";
 import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
 import type { appService } from "./app.service";
-import { requireSession, type SessionContext } from "./lib/session";
 
 export type AppContext = RhythmHttpContext &
+  AuthContext &
   SessionContext & {
     appService: typeof appService;
   };
@@ -13,7 +14,7 @@ export const appController = new RhythmRouter<AppContext>()
     ctx.response.headers.set("content-type", "text/plain");
     ctx.response.body = ctx.appService.getHello();
   })
-  .get("/me", requireSession, (ctx) => {
+  .get("/me", requireSession(), (ctx) => {
     ctx.json({
       id: ctx.user.id,
       name: ctx.user.name,
