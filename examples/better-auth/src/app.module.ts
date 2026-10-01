@@ -1,7 +1,6 @@
-import { betterAuthModule, withSession } from "@rhythmjs/better-auth";
+import { betterAuthModule, cors, withSession } from "@rhythmjs/better-auth";
 import { Rhythm } from "@rhythmjs/rhythm";
 import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
-import { cors } from "@rhythmjs/security/cors";
 import { appController } from "./app.controller";
 import { appService } from "./app.service";
 import { auth, closeAuthDatabase, frontendOrigin } from "./lib/auth";

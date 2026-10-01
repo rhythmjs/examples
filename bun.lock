@@ -35,10 +35,8 @@
       "version": "0.0.1",
       "dependencies": {
         "@rhythmjs/better-auth": "file:../../../better-auth",
-        "@rhythmjs/http": "^0.0.8",
         "@rhythmjs/rhythm": "^0.0.13",
         "@rhythmjs/router": "^0.0.12",
-        "@rhythmjs/security": "^0.0.6",
         "better-auth": "^1.7.7",
       },
       "devDependencies": {
@@ -738,9 +736,7 @@
 
     "ai-sdk-example/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
-    "better-auth-example/@rhythmjs/better-auth": ["@rhythmjs/better-auth@file:../better-auth", { "devDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "0.0.12", "@rhythmjs/router": "^0.0.12", "@rhythmjs/security": "^0.0.6", "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "better-auth": "^1.7.7", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "@rhythmjs/security": "^0.0.6", "better-auth": "*" } }],
-
-    "better-auth-example/@rhythmjs/http": ["@rhythmjs/http@file:../http", { "dependencies": { "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "i18next": "^26.4.2", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.13", "@rhythmjs/router": "^0.0.12", "i18next": "*" }, "optionalPeers": ["i18next"] }],
+    "better-auth-example/@rhythmjs/better-auth": ["@rhythmjs/better-auth@file:../better-auth", { "dependencies": { "@rhythmjs/http": "^0.0.8", "@rhythmjs/security": "^0.0.6" }, "devDependencies": { "@rhythmjs/rhythm": "0.0.12", "@rhythmjs/router": "^0.0.12", "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "better-auth": "^1.7.7", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.11", "@rhythmjs/router": "^0.0.11", "better-auth": "*" } }],
 
     "better-auth-example/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
@@ -876,19 +872,11 @@
 
     "better-auth-example/@rhythmjs/better-auth/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
 
-    "better-auth-example/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "better-auth-example/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
-
     "better-auth-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
     "bullmq-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
     "drizzle-postgres-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "file-upload-example/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "file-upload-example/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
 
     "file-upload-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
@@ -904,10 +892,6 @@
 
     "resend-example/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
-    "scalar-example/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "scalar-example/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
-
     "scalar-example/@rhythmjs/openapi/@rhythmjs/http": ["@rhythmjs/http@file:../http", { "dependencies": { "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "i18next": "^26.4.2", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.13", "@rhythmjs/router": "^0.0.12", "i18next": "*" }, "optionalPeers": ["i18next"] }],
 
     "scalar-example/@rhythmjs/openapi/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
@@ -921,10 +905,6 @@
     "scalar-example/@rhythmjs/scalar/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", { "devDependencies": { "@types/bun": "^1.4.2", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
 
     "scalar-example/@rhythmjs/scalar/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", { "dependencies": { "@rhythmjs/rhythm": "workspace:*", "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "typescript": "^7.0.2" } }],
-
-    "swagger-ui-example/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "swagger-ui-example/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
 
     "swagger-ui-example/@rhythmjs/openapi/@rhythmjs/http": ["@rhythmjs/http@file:../http", { "dependencies": { "rou3": "^0.11.0" }, "devDependencies": { "@types/bun": "^1.2.0", "@types/node": "^26.6.3", "i18next": "^26.4.2", "oxlint": "^1.0.0", "prettier": "^3.5.0", "typescript": "^7.0.2" }, "peerDependencies": { "@rhythmjs/rhythm": "^0.0.13", "@rhythmjs/router": "^0.0.12", "i18next": "*" }, "optionalPeers": ["i18next"] }],
 
@@ -992,27 +972,11 @@
 
     "tsx/esbuild/@esbuild/win32-x64": ["@esbuild/win32-x64@0.28.2", "", { "os": "win32", "cpu": "x64" }, "sha512-5ebpxr3nWMzrL/rnUI755Jkuee0bHL/Gq0WTF9lvcpv73wAp5eu8MfBUgWK9bhWvZjj7yX8etf/8tI8Ney695g=="],
 
-    "scalar-example/@rhythmjs/openapi/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "scalar-example/@rhythmjs/openapi/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
-
     "scalar-example/@rhythmjs/openapi/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "scalar-example/@rhythmjs/scalar/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "scalar-example/@rhythmjs/scalar/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
 
     "scalar-example/@rhythmjs/scalar/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
 
-    "swagger-ui-example/@rhythmjs/openapi/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "swagger-ui-example/@rhythmjs/openapi/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
-
     "swagger-ui-example/@rhythmjs/openapi/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "swagger-ui-example/@rhythmjs/swagger/@rhythmjs/http/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
-
-    "swagger-ui-example/@rhythmjs/swagger/@rhythmjs/http/@rhythmjs/router": ["@rhythmjs/router@file:../rhythm/packages/router", {}],
 
     "swagger-ui-example/@rhythmjs/swagger/@rhythmjs/router/@rhythmjs/rhythm": ["@rhythmjs/rhythm@file:../rhythm/packages/rhythm", {}],
   }
