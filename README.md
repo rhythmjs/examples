@@ -24,7 +24,7 @@ The four database examples serve the same notes CRUD API:
 | ------------------------------------------------------------ | ---------------------------------------- | ---- |
 | [`examples/drizzle-postgres`](examples/drizzle-postgres)     | Drizzle ORM + Bun native SQL, PostgreSQL | 3001 |
 | [`examples/prisma-postgres`](examples/prisma-postgres)       | Prisma, PostgreSQL                       | 3002 |
-| [`examples/mikro-orm-postgres`](examples/mikro-orm-postgres) | MikroORM (`EntitySchema`), PostgreSQL    | 3003 |
+| [`examples/mikro-orm-postgres`](examples/mikro-orm-postgres) | MikroORM (`defineEntity`), PostgreSQL    | 3003 |
 | [`examples/mongodb`](examples/mongodb)                       | Official MongoDB driver                  | 3004 |
 
 ### Integrations
@@ -73,7 +73,7 @@ src/
 ```
 
 The Drizzle example keeps its table definition in `src/notes/notes.table.ts`, and the MikroORM example its
-`EntitySchema` in `src/notes/note.entity.ts` — everything notes-related lives under `src/notes/`.
+`defineEntity` schema in `src/notes/note.entity.ts` — everything notes-related lives under `src/notes/`.
 
 Migrations are checked in per ORM convention: `drizzle/*.sql` (from `drizzle-kit generate`),
 `prisma/migrations/*` (applied with `prisma migrate deploy`), and `src/migrations/*.ts` (MikroORM `Migrator`,

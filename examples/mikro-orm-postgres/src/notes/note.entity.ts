@@ -1,26 +1,26 @@
-import { EntitySchema } from "@mikro-orm/core";
+import { defineEntity, p } from "@mikro-orm/core";
 
-export class Note {
-  id: string = crypto.randomUUID();
-  title: string;
-  content: string;
-  createdAt: Date = new Date();
-  updatedAt: Date = new Date();
-
-  constructor(title: string, content: string = "") {
-    this.title = title;
-    this.content = content;
-  }
-}
-
-export const noteEntitySchema = new EntitySchema<Note>({
-  class: Note,
+export const NoteSchema = defineEntity({
+  name: "Note",
   tableName: "notes",
   properties: {
-    id: { type: "string", primary: true },
-    title: { type: "string" },
-    content: { type: "text", default: "" },
-    createdAt: { type: "datetime", fieldName: "created_at" },
-    updatedAt: { type: "datetime", fieldName: "updated_at", onUpdate: () => new Date() },
+    id: p
+      .string()
+      .primary()
+      .onCreate(() => crypto.randomUUID()),
+    title: p.string(),
+    content: p.text().default(""),
+    createdAt: p
+      .datetime()
+      .fieldName("created_at")
+      .onCreate(() => new Date()),
+    updatedAt: p
+      .datetime()
+      .fieldName("updated_at")
+      .onCreate(() => new Date())
+      .onUpdate(() => new Date()),
   },
 });
+
+export class Note extends NoteSchema.class {}
+NoteSchema.setClass(Note);

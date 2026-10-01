@@ -12,8 +12,7 @@ export function createNotesService(orm: MikroORM) {
     },
     async create(input: CreateNoteInput): Promise<Note> {
       const em = orm.em.fork();
-      const note = new Note(input.title, input.content);
-      em.persist(note);
+      const note = em.create(Note, { title: input.title, content: input.content });
       await em.flush();
       return note;
     },
@@ -29,7 +28,7 @@ export function createNotesService(orm: MikroORM) {
       const em = orm.em.fork();
       const note = await em.findOne(Note, { id });
       if (!note) return false;
-      await em.removeAndFlush(note);
+      await em.remove(note).flush();
       return true;
     },
   };

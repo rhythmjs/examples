@@ -10,9 +10,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@mikro-orm/core": "^6.4.0",
-    "@mikro-orm/migrations": "^6.4.0",
-    "@mikro-orm/postgresql": "^6.4.0",
+    "@mikro-orm/core": "^7.2.3",
+    "@mikro-orm/migrations": "^7.2.3",
+    "@mikro-orm/postgresql": "^7.2.3",
     "@rhythmjs/middleware": "^0.0.5",
     "@rhythmjs/rhythm": "^0.0.13",
     "@rhythmjs/router": "^0.0.12",
