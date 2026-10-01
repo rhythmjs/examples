@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@rhythmjs/bullmq": "^0.0.2",
-    "@rhythmjs/rhythm": "^0.0.13",
-    "@rhythmjs/router": "^0.0.12"
+    "@rhythmjs/rhythm": "^0.0.14",
+    "@rhythmjs/router": "^0.0.13"
   },
   "devDependencies": {
     "@rhythmjs/testing": "^0.0.2",
