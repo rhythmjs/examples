@@ -29,7 +29,7 @@ describe("AppController (e2e)", () => {
     const res = await get("/");
 
     expect(res.status).toBe(200);
-    expect(res.headers.get("content-type")).toBe("text/plain");
+    expect(res.headers.get("content-type")).toBe("text/plain; charset=utf-8");
     expect(await res.text()).toBe("Hello World!");
   });
 

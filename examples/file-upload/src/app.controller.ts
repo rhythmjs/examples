@@ -16,8 +16,7 @@ const limits = multipart({ maxBytes: 5 * 1024 * 1024, maxFileSize: 2 * 1024 * 10
 
 export const appController = new RhythmRouter<AppContext>()
   .get("/", (ctx) => {
-    ctx.response.headers.set("content-type", "text/plain");
-    ctx.response.body = ctx.appService.getHello();
+    ctx.text(ctx.appService.getHello());
   })
   .post<MultipartContext>("/avatar", limits, async (ctx) => {
     const file = ctx.form.file("avatar");

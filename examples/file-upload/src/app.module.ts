@@ -10,9 +10,7 @@ export const appModule = new Rhythm<RhythmHttpContext, { appService: typeof appS
 })
   .use(appController.middleware())
   .use((ctx) => {
-    ctx.response.status = 404;
-    ctx.response.headers.set("content-type", "application/json");
-    ctx.response.body = JSON.stringify({ success: false, status: 404, message: "Not Found" });
+    ctx.json({ success: false, status: 404, message: "Not Found" }, 404);
   });
 
 appModule.context.appService = appService;

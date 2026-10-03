@@ -11,8 +11,7 @@ export type AppContext = RhythmHttpContext &
 
 export const appController = new RhythmRouter<AppContext>()
   .get("/", (ctx) => {
-    ctx.response.headers.set("content-type", "text/plain");
-    ctx.response.body = ctx.appService.getHello();
+    ctx.text(ctx.appService.getHello());
   })
   .get("/me", requireSession(), (ctx) => {
     ctx.json({

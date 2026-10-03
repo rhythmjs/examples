@@ -10,8 +10,7 @@ export type AppContext = RhythmHttpContext & {
 
 export const appController = new RhythmRouter<AppContext>()
   .get("/", (ctx) => {
-    ctx.response.headers.set("content-type", "text/plain");
-    ctx.response.body = ctx.appService.getHello();
+    ctx.text(ctx.appService.getHello());
   })
   .post("/contact", async (ctx) => {
     const { email, message } = (await ctx.request.json()) as { email?: string; message?: string };

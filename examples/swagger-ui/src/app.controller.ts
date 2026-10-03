@@ -13,7 +13,6 @@ export const appController = new RhythmRouter<AppContext>().get(
   apiOperation({ summary: "Say hello", operationId: "getHello" }),
   apiResponse(200, { description: "A greeting", content: { "text/plain": { schema: { type: "string" } } } }),
   (ctx) => {
-    ctx.response.headers.set("content-type", "text/plain");
-    ctx.response.body = ctx.appService.getHello();
+    ctx.text(ctx.appService.getHello());
   },
 );
