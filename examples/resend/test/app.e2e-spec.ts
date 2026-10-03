@@ -1,4 +1,4 @@
-import { afterAll, afterEach, describe, expect, mock, spyOn, test } from "bun:test";
+import { afterEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { appModule } from "../src/app.module";
 import { mailService } from "../src/mail/mail.service";
@@ -31,8 +31,6 @@ const contact = (body: unknown) =>
   );
 
 describe("AppController (e2e)", () => {
-  afterAll(() => appModule.teardown());
-
   test("/ (GET)", async () => {
     const res = await app(new Request("http://localhost/"));
 

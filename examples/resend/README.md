@@ -7,7 +7,7 @@ Built from the [template](https://github.com/rhythmjs/template): its `app.module
 - `bun add resend`
 - `src/mail/mail.service.ts`: `mailService.send` wraps `emails.send` with a lazily created client, so tests stub the service.
 - `src/app.controller.ts`: `POST /contact` handles Resend's `{ data, error }` result: Resend does not throw for API errors, so an `error` becomes a 502 instead of a false success. User input is escaped before it goes into the HTML.
-- `src/app.module.ts`: `mailService` is provided next to `appService`.
+- `src/app.module.ts`: `mailService` is assigned to the module's `context` next to `appService`.
 
 `RESEND_API_KEY` is needed to send (create one at https://resend.com/api-keys). Until you verify a domain, send from `onboarding@resend.dev`, the default here; `MAIL_FROM` overrides it.
 

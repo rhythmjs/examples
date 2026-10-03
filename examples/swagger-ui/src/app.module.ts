@@ -8,8 +8,10 @@ import { appService } from "./app.service";
 
 const openapiConfig = defineDocument({ info: { title: "Hello API", version: "1.0.0" } });
 
-export const appModule = new Rhythm<RhythmHttpContext>({ name: "app", type: "module" })
-  .provide(() => ({ appService }))
+export const appModule = new Rhythm<RhythmHttpContext, { appService: typeof appService }>({
+  name: "app",
+  type: "module",
+})
   .register(openapiModule.forRoot({ document: openapiConfig }))
   .register(swaggerModule.forRoot())
   .use(appController.middleware())
@@ -18,3 +20,5 @@ export const appModule = new Rhythm<RhythmHttpContext>({ name: "app", type: "mod
     ctx.response.headers.set("content-type", "application/json");
     ctx.response.body = JSON.stringify({ success: false, status: 404, message: "Not Found" });
   });
+
+appModule.context.appService = appService;

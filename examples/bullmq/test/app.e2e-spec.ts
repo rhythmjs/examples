@@ -2,10 +2,10 @@ import { afterAll, describe, expect, test } from "bun:test";
 import { RedisClient } from "bun";
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { appModule } from "../src/app.module";
+import { mailService } from "../src/emails/mail.service";
+import { createQueue } from "../src/emails/queue";
 
 describe("AppController (e2e)", () => {
-  afterAll(() => appModule.teardown());
-
   test("/ (GET)", async () => {
     const res = await app(new Request("http://localhost/"));
 
@@ -29,6 +29,10 @@ const reachable = await probe.ping().then(
   () => false,
 );
 probe.close();
+
+const queueService = reachable ? createQueue(mailService) : undefined;
+if (queueService) appModule.context.queueService = queueService;
+afterAll(() => queueService?.close());
 
 const app = toFetchHandler(appModule);
 const send = (body: unknown) =>

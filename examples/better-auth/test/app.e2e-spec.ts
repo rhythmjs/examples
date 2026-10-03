@@ -3,6 +3,7 @@ import { toFetchHandler } from "@rhythmjs/router/fetch";
 
 process.env.AUTH_DB = ":memory:";
 const { appModule } = await import("../src/app.module");
+const { closeAuthDatabase } = await import("../src/lib/auth");
 const { migrate } = await import("../src/lib/migrate");
 
 const frontend = "http://localhost:3001";
@@ -22,7 +23,7 @@ describe("AppController (e2e)", () => {
     app(new Request(`http://localhost${path}`, { headers }));
 
   beforeAll(migrate);
-  afterAll(() => appModule.teardown());
+  afterAll(closeAuthDatabase);
 
   test("/ (GET)", async () => {
     const res = await get("/");

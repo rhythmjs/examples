@@ -4,11 +4,12 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { appModule } from "../src/app.module";
+import { createStorage } from "../src/storage";
+
+appModule.context.s3 = createStorage();
 
 describe("AppController (e2e)", () => {
   const app = toFetchHandler(appModule);
-
-  afterAll(() => appModule.teardown());
 
   test("/ (GET)", async () => {
     const res = await app(new Request("http://localhost/"));

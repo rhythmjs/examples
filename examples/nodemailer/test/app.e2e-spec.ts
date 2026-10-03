@@ -1,11 +1,14 @@
 import { afterAll, describe, expect, test } from "bun:test";
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { appModule } from "../src/app.module";
+import { createMailer } from "../src/mail/mail";
 
 describe("AppController (e2e)", () => {
+  const { mailer, close } = createMailer();
+  appModule.context.mailer = mailer;
   const app = toFetchHandler(appModule);
 
-  afterAll(() => appModule.teardown());
+  afterAll(close);
 
   test("/ (GET)", async () => {
     const res = await app(new Request("http://localhost/"));

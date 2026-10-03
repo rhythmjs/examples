@@ -5,8 +5,8 @@ Built from the [template](https://github.com/rhythmjs/template): its `app.module
 ## What is added to the template
 
 - `bun add nodemailer` (and `@types/nodemailer` for development)
-- `src/mail/mail.ts`: `createMailer` is a provider with a dispose function, so closing the app closes the transport. With `SMTP_HOST` set, mail goes over SMTP; without it, the JSON transport builds each message and returns it instead of sending, so the example runs and tests with no mail server.
-- `src/app.module.ts`: `.provide(createMailer, closeMailer)`.
+- `src/mail/mail.ts`: `createMailer()` returns the `mailer` and a `close()` for the transport; `main.ts` assigns the mailer to `appModule.context.mailer` and calls `close()` on shutdown. With `SMTP_HOST` set, mail goes over SMTP; without it, the JSON transport builds each message and returns it instead of sending, so the example runs and tests with no mail server.
+- `src/app.module.ts`: `mailer` is declared on the module's context (`Rhythm<RhythmHttpContext, { appService; mailer }>`).
 - `src/app.controller.ts`: `POST /signup` sends the welcome mail through `ctx.mailer`.
 
 For a real inbox, `docker compose up -d mailpit` starts [Mailpit](https://mailpit.axllent.org) (SMTP on 1025, web inbox on 8025).

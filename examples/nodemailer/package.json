@@ -11,8 +11,8 @@
     "test:e2e": "bun test ./test/*.e2e-spec.ts"
   },
   "dependencies": {
-    "@rhythmjs/rhythm": "^0.0.14",
-    "@rhythmjs/router": "^0.0.13",
+    "@rhythmjs/rhythm": "^0.0.15",
+    "@rhythmjs/router": "^0.0.14",
     "nodemailer": "^10.0.0"
   },
   "devDependencies": {

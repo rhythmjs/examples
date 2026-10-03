@@ -5,10 +5,10 @@ Built from the [template](https://github.com/rhythmjs/template): its `app.module
 ## What is added to the template
 
 - `bun add @rhythmjs/bullmq`
-- `src/emails/queue.ts`: `createQueue` builds the typed queue service (`AppJobs` maps `"email.send"` to its payload) and starts a worker on it; `closeQueue` closes the queue, which closes the worker first. They are the `provide(factory, dispose)` pair, so closing the app releases Redis.
+- `src/emails/queue.ts`: `createQueue(mailService)` builds the typed queue service (`AppJobs` maps `"email.send"` to its payload) and starts a worker on it. `main.ts` assigns it to `appModule.context.queueService` and calls `queueService.close()` on shutdown, which closes the worker first and releases Redis.
 - `src/emails/mail.service.ts`: `mailService`, a plain object the worker calls and the controller reads; it records what was "sent".
 - `src/emails/emails.controller.ts`: `POST /emails` validates the body and enqueues an `email.send` job (202 with the job id); `GET /emails` lists what the worker processed; `GET /emails/counts` forwards the queue's job counts.
-- `src/emails/emails.module.ts`: `emailsModule` provides both and mounts the controller.
+- `src/emails/emails.module.ts`: `emailsModule` assigns `mailService` to its `context`, reads the app's `queueService` and mounts the controller.
 - `src/app.module.ts`: `.register(emailsModule)` before the controller.
 
 `REDIS_URL` overrides the default `redis://localhost:6379`. Failed jobs retry three times with exponential backoff (the queue's `defaultJobOptions`).

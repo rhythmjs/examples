@@ -1,5 +1,7 @@
-import { afterAll, afterEach, describe, expect, mock, spyOn, test } from "bun:test";
+import { afterEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { ConfigError } from "@rhythmjs/config";
+import { Rhythm } from "@rhythmjs/rhythm";
+import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { simulateReadableStream } from "ai";
 import { MockLanguageModelV4 } from "ai/test";
@@ -9,8 +11,6 @@ import { aiConfig } from "../src/config/ai.config";
 
 describe("AppController (e2e)", () => {
   const app = toFetchHandler(appModule);
-
-  afterAll(() => appModule.teardown());
 
   test("/ (GET)", async () => {
     const res = await app(new Request("http://localhost/"));
@@ -121,13 +121,20 @@ const withEnv = async (env: Record<string, string | undefined>, run: () => Promi
   }
 };
 
+// The config loads when chatModule is evaluated, so each case imports a fresh copy of it.
+let copy = 0;
+const importChatModule = async () => {
+  const specifier = "../src/chat/chat.module";
+  return (await import(`${specifier}?copy=${++copy}`)) as typeof import("../src/chat/chat.module");
+};
+
 describe("model swapping through @rhythmjs/config", () => {
   const modelInfo = async (env: Record<string, string | undefined>) => {
     let info: unknown;
     await withEnv(env, async () => {
-      await appModule.setup();
-      info = await (await toFetchHandler(appModule)(new Request("http://localhost/api/model"))).json();
-      await appModule.teardown();
+      const { chatModule } = await importChatModule();
+      const chatApp = toFetchHandler(new Rhythm<RhythmHttpContext>().register(chatModule));
+      info = await (await chatApp(new Request("http://localhost/api/model"))).json();
     });
     return info;
   };
@@ -142,7 +149,7 @@ describe("model swapping through @rhythmjs/config", () => {
 
   test("an invalid value stops the app from booting, with the path in the error", async () => {
     await withEnv({ AI_MODEL: "" }, async () => {
-      await expect(appModule.setup()).rejects.toBeInstanceOf(ConfigError);
+      await expect(importChatModule()).rejects.toBeInstanceOf(ConfigError);
       await expect(aiConfig()).rejects.toThrow("ai.model");
     });
   });

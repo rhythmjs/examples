@@ -1,11 +1,9 @@
-import { afterAll, describe, expect, test } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { appModule } from "../src/app.module";
 
 describe("AppController (e2e)", () => {
   const app = toFetchHandler(appModule);
-
-  afterAll(() => appModule.teardown());
 
   test("/ (GET)", async () => {
     const res = await app(new Request("http://localhost/"));

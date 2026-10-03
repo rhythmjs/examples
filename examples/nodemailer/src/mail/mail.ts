@@ -19,12 +19,8 @@ export function createMailer() {
           text: `Hi ${name}, thanks for signing up.`,
         }),
     },
-    "#transport": transport,
+    close: () => transport.close(),
   };
-}
-
-export function closeMailer(value: ReturnType<typeof createMailer>) {
-  value["#transport"].close();
 }
 
 export type Mailer = ReturnType<typeof createMailer>["mailer"];
