@@ -12,13 +12,13 @@
     "db:migrate": "bun src/lib/migrate.ts"
   },
   "dependencies": {
-    "@rhythmjs/better-auth": "^0.0.2",
-    "@rhythmjs/rhythm": "^0.0.15",
-    "@rhythmjs/router": "^0.0.14",
+    "@rhythmjs/better-auth": "^0.0.4",
+    "@rhythmjs/rhythm": "^0.0.16",
+    "@rhythmjs/router": "^0.0.16",
     "better-auth": "^1.7.7"
   },
   "devDependencies": {
-    "@rhythmjs/testing": "^0.0.2",
+    "@rhythmjs/testing": "^0.0.3",
     "@types/bun": "^1.4.2",
     "@types/node": "^26.6.3",
     "typescript": "^7.0.2"
