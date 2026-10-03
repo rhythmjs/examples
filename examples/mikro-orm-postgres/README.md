@@ -2,8 +2,8 @@
 
 Notes CRUD on Rhythm with [MikroORM](https://mikro-orm.io) against PostgreSQL.
 
-The entity is declared with `defineEntity` (no decorators, no `reflect-metadata` — Bun-friendly). The ORM is a Rhythm
-provider with a dispose hook (`orm.close()`), so `appModule.teardown()` closes the pool on shutdown. The notes service
+The entity is declared with `defineEntity` (no decorators, no `reflect-metadata` — Bun-friendly). `createDatabase()` initialises the ORM at startup and returns it with a `close()` (`orm.close()`); `main.ts` assigns it to
+`appModule.context.orm` and calls `close()` on shutdown. The notes service
 is a factory (`createNotesService(orm)`) that forks a fresh `EntityManager` per operation, as MikroORM requires.
 
 Validation and errors use zod + `@rhythmjs/middleware`: `validate("body", createNoteSchema)` /

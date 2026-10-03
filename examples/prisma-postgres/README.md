@@ -2,9 +2,9 @@
 
 Notes CRUD on Rhythm with [Prisma](https://www.prisma.io) against PostgreSQL.
 
-`PrismaClient` is a Rhythm provider with a dispose hook (`$disconnect`), so `appModule.teardown()` closes the
-connection on shutdown. The notes service is a factory (`createNotesService(prisma)`) resolved from the `prisma`
-provider.
+`createDatabase()` returns the `PrismaClient` with a `close()` (`$disconnect`). `main.ts` assigns the client to
+`appModule.context.prisma` and calls `close()` on shutdown. The notes service is a factory
+(`createNotesService(prisma)`) the notes module builds from `ctx.prisma`.
 
 Validation and errors use zod + `@rhythmjs/middleware`: `validate("body", createNoteSchema)` /
 `validate("body", updateNoteSchema)` guard the write routes, `intercept(notesResponseSchema)` enforces the response

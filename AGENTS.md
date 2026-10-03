@@ -19,4 +19,5 @@ service (a plain object the module provides) and stub it in tests, or pass the v
   `.prettierrc.json`.
 - Conventions: Nest-style file names (`app.module.ts`, `notes.controller.ts`, `notes.service.ts`), lowerCamelCase
   instances (`appModule`, `notesController`), factories over classes (`createNotesService(db)`), database connections
-  as `provide(factory, dispose)` providers so `appModule.teardown()` releases them.
+  created at startup in `main.ts`, assigned to `appModule.context` (typed by `Rhythm<Input, { db: Db }>`) and closed there on
+  shutdown.

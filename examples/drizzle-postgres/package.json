@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@rhythmjs/middleware": "^0.0.5",
-    "@rhythmjs/rhythm": "^0.0.14",
-    "@rhythmjs/router": "^0.0.13",
+    "@rhythmjs/rhythm": "^0.0.15",
+    "@rhythmjs/router": "^0.0.14",
     "drizzle-orm": "^0.44.2",
     "zod": "^4.1.0"
   },

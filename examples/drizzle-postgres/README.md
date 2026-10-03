@@ -3,8 +3,9 @@
 Notes CRUD on Rhythm with [Drizzle ORM](https://orm.drizzle.team) and Bun's native `SQL` driver (`drizzle-orm/bun-sql`)
 against PostgreSQL.
 
-The database connection is a Rhythm provider with a dispose hook, so `appModule.teardown()` closes the pool on
-shutdown. The notes service is a factory (`createNotesService(db)`) resolved from the `db` provider.
+`createDatabase()` returns the drizzle `db` with a `close()` for the pool. `main.ts` assigns `db` to
+`appModule.context.db` and calls `close()` on shutdown. The notes service is a factory (`createNotesService(db)`) the
+notes module builds from `ctx.db`.
 
 Validation and errors use zod + `@rhythmjs/middleware`: `validate("body", createNoteSchema)` /
 `validate("body", updateNoteSchema)` guard the write routes, `intercept(notesResponseSchema)` enforces the response

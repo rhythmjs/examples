@@ -2,11 +2,14 @@ import { afterAll, describe, expect, test } from "bun:test";
 import { RedisClient } from "bun";
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { appModule } from "../src/app.module";
+import { createRedis } from "../src/redis";
 
 describe("AppController (e2e)", () => {
+  const redis = createRedis();
+  appModule.context.redis = redis;
   const app = toFetchHandler(appModule);
 
-  afterAll(() => appModule.teardown());
+  afterAll(() => redis.close());
 
   test("/ (GET)", async () => {
     const res = await app(new Request("http://localhost/"));

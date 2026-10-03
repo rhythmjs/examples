@@ -6,16 +6,12 @@ const databaseUrl = process.env.DATABASE_URL ?? "postgres://postgres:postgres@lo
 
 export type Database = BunSQLDatabase<typeof schema>;
 
-export interface DatabaseValue {
+export interface DatabaseHandle {
   db: Database;
-  "#client": SQL;
+  close(): Promise<void>;
 }
 
-export function createDatabase(): DatabaseValue {
+export function createDatabase(): DatabaseHandle {
   const client = new SQL(databaseUrl);
-  return { db: drizzle({ client, schema }), "#client": client };
-}
-
-export async function closeDatabase(value: DatabaseValue): Promise<void> {
-  await value["#client"].close();
+  return { db: drizzle({ client, schema }), close: () => client.close() };
 }

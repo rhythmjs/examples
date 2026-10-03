@@ -5,10 +5,10 @@ Built from the [template](https://github.com/rhythmjs/template): its `app.module
 ## What is added to the template
 
 - No new dependency: `RedisClient` is part of Bun.
-- `src/redis.ts`: `createRedis` / `closeRedis`, a provider with a dispose function.
-- `src/products/products.module.ts`: `productsModule` provides the client and the products service and mounts `productsController`.
+- `src/redis.ts`: `createRedis()` returns the client. `main.ts` (and the e2e spec) assign it to `appModule.context.redis` and call `redis.close()` on shutdown.
+- `src/products/products.module.ts`: `productsModule` receives `redis` from its parent, exposes the products service through its own `context`, and mounts `productsController`.
 - `src/products/products.controller.ts`: `GET /products/:id` looks in Redis first (`x-cache: hit` or `miss`), loads from the deliberately slow in-memory service on a miss, stores the JSON with `set` and a 60-second `expire`; `PATCH /products/:id` updates the product and removes the entry with `del`.
-- `src/app.module.ts`: `.register(productsModule)` before the controller; closing the app closes the Redis client.
+- `src/app.module.ts`: `.register(productsModule)` before the controller; `main.ts` closes the Redis client on shutdown.
 
 `REDIS_URL` overrides the default `redis://localhost:6379`.
 

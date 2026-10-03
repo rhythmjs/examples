@@ -5,7 +5,12 @@ import { NoteSchema } from "./notes/note.entity";
 
 const clientUrl = process.env.DATABASE_URL ?? "postgres://postgres:postgres@localhost:5432/notes_mikro_orm";
 
-export async function createDatabase(): Promise<{ orm: MikroORM }> {
+export interface Database {
+  orm: MikroORM;
+  close(): Promise<void>;
+}
+
+export async function createDatabase(): Promise<Database> {
   const orm = await MikroORM.init({
     clientUrl,
     entities: [NoteSchema],
@@ -15,9 +20,5 @@ export async function createDatabase(): Promise<{ orm: MikroORM }> {
       snapshot: false,
     },
   });
-  return { orm };
-}
-
-export async function closeDatabase({ orm }: { orm: MikroORM }): Promise<void> {
-  await orm.close();
+  return { orm, close: () => orm.close() };
 }

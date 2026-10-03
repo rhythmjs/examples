@@ -1,9 +1,9 @@
 # Rhythm examples
 
 A Bun workspace of small, self-contained apps showing how to wire a database, or another tool, into
-[Rhythm](https://rhythm.js.org) properly: the connection is a `provide(factory, dispose)` provider, the
-service is a factory resolved from that provider, the controller is a `RhythmRouter`, and
-`appModule.teardown()` closes everything on shutdown. Request/response contracts are
+[Rhythm](https://rhythm.js.org) properly: the connection is created at startup in `main.ts` and assigned to
+`appModule.context`, the service is a factory the module builds from that connection, the controller is a
+`RhythmRouter`, and `main.ts` closes the connection on shutdown. Request/response contracts are
 [zod](https://zod.dev) schemas enforced with `@rhythmjs/middleware`: `validate("body", …)` on writes,
 `intercept(…)` on responses, and a `filter()` error boundary that turns thrown `HttpError`s (and anything
 unexpected) into JSON failures.
@@ -63,9 +63,9 @@ Each example follows the Rhythm template conventions:
 
 ```
 src/
-  main.ts                 Bun.serve + toFetchHandler(appModule), graceful teardown on SIGINT/SIGTERM
-  app.module.ts           appModule: filter() error boundary → db provider → notesService provider → controller → 404
-  database.ts             createDatabase/closeDatabase factory + dispose pair
+  main.ts                 Bun.serve + toFetchHandler(appModule), creates the connection and assigns it to appModule.context; closes it on SIGINT/SIGTERM
+  app.module.ts           appModule: filter() error boundary → notes module (derives notesService from ctx.db) → 404
+  database.ts             createDatabase() → { <connection>, close() }
   notes/
     notes.schema.ts       zod schemas: create/update inputs + the response contract
     notes.controller.ts   notesController: RhythmRouter (/api/notes), validate("body") + intercept(response)

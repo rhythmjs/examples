@@ -1,6 +1,6 @@
-import { closeDatabase, createDatabase } from "./database";
+import { createDatabase } from "./database";
 
-const { orm } = await createDatabase();
+const { orm, close } = await createDatabase();
 const migrated = await orm.migrator.up();
-await closeDatabase({ orm });
+await close();
 console.log(`applied ${migrated.length} migration(s)`);

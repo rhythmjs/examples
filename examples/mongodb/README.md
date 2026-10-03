@@ -2,9 +2,8 @@
 
 Notes CRUD on Rhythm with the official [MongoDB driver](https://www.mongodb.com/docs/drivers/node/current/) — no ORM.
 
-The connected `Db` is a Rhythm provider; the underlying `MongoClient` rides along under the hash-key `"#client"`, so
-it never leaks into the request context or provider graph but is still reachable by the dispose hook that closes it on
-`appModule.teardown()`. The notes service is a factory (`createNotesService(db)`) that maps `_id: ObjectId` documents
+`createDatabase()` connects at startup and returns the `Db` together with a `close()` that owns the `MongoClient`. `main.ts`
+assigns the `Db` to `appModule.context.db` (typed by `Rhythm<RhythmHttpContext, { db: Db }>`) and calls `close()` on shutdown. The notes service is a factory (`createNotesService(db)`) that maps `_id: ObjectId` documents
 to `id: string` DTOs at the boundary.
 
 Validation and errors use zod + `@rhythmjs/middleware`: `validate("body", createNoteSchema)` /
