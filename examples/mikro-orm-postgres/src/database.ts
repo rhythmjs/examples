@@ -5,13 +5,8 @@ import { NoteSchema } from "./notes/note.entity";
 
 const clientUrl = process.env.DATABASE_URL ?? "postgres://postgres:postgres@localhost:5432/notes_mikro_orm";
 
-export interface Database {
-  orm: MikroORM;
-  close(): Promise<void>;
-}
-
-export async function createDatabase(): Promise<Database> {
-  const orm = await MikroORM.init({
+export function createOrm() {
+  return MikroORM.init({
     clientUrl,
     entities: [NoteSchema],
     extensions: [Migrator],
@@ -20,5 +15,4 @@ export async function createDatabase(): Promise<Database> {
       snapshot: false,
     },
   });
-  return { orm, close: () => orm.close() };
 }

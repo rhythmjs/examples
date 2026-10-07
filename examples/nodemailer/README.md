@@ -1,13 +1,14 @@
 # nodemailer-example
 
-Built from the [template](https://github.com/rhythmjs/template): its `app.module.ts`, `app.controller.ts`, `app.service.ts`, `main.ts` and tests, plus [Nodemailer](https://nodemailer.com): a signup endpoint that sends a welcome email.
+A signup endpoint that sends a welcome email with [Nodemailer](https://nodemailer.com).
 
-## What is added to the template
+## How it fits together
 
-- `bun add nodemailer` (and `@types/nodemailer` for development)
-- `src/mail/mail.ts`: `createMailer()` returns the `mailer` and a `close()` for the transport; `main.ts` assigns the mailer to `appModule.context.mailer` and calls `close()` on shutdown. With `SMTP_HOST` set, mail goes over SMTP; without it, the JSON transport builds each message and returns it instead of sending, so the example runs and tests with no mail server.
-- `src/app.module.ts`: `mailer` is declared on the module's context (`Rhythm<RhythmHttpContext, { appService; mailer }>`).
-- `src/app.controller.ts`: `POST /signup` sends the welcome mail through `ctx.mailer`.
+- `src/mail/transport.module.ts`: `transportModule` is the infrastructure module. It registers the Nodemailer `transport` with `decorate` and closes it as the cleanup of `register`. With `SMTP_HOST` set, mail goes over SMTP; without it, the JSON transport builds each message and returns it instead of sending, so the example runs and tests with no mail server.
+- `src/mail/mail.module.ts`: `mailModule` is the feature module. It `include`s `transportModule`, builds `mailService` with `decorate` (a later `register` sees what an earlier one added), and mounts `mailController` with `mount`.
+- `src/mail/mail.controller.ts`: `POST /signup` sends the welcome mail through `ctx.mailService`.
+- `src/app.module.ts`: includes `transportModule` so `app.stop()` closes the transport, adds `appService`, and mounts `appController` and `mailModule`.
+- `src/main.ts`: `Bun.serve({ fetch: toFetchHandler(appModule) })`, and `appModule.stop()` on shutdown.
 
 For a real inbox, `docker compose up -d mailpit` starts [Mailpit](https://mailpit.axllent.org) (SMTP on 1025, web inbox on 8025).
 
@@ -33,6 +34,6 @@ open http://localhost:8025
 ## Test
 
 ```sh
-bun test          # the template's controller spec
-bun run test:e2e  # the template's e2e spec, plus the JSON transport: the 201 with a message id, and a 400 for an invalid address with no mail built.
+bun test          # controller specs, the mail one with a stubbed mail service
+bun run test:e2e  # the whole app with the JSON transport: a 201 with a message id and a 400 for an invalid address
 ```

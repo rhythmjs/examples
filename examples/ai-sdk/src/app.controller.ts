@@ -1,5 +1,5 @@
 import { RhythmRouter } from "@rhythmjs/router";
-import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
+import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import type { appService } from "./app.service";
 
 export type AppContext = RhythmHttpContext & {

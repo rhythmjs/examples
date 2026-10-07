@@ -6,10 +6,10 @@ Built from the [template](https://github.com/rhythmjs/template): its `app.module
 
 - `bun add ai @ai-sdk/openai @rhythmjs/config zod`
 - `src/config/ai.config.ts`: an `ai` config namespace validated with zod. `AI_MODEL` defaults to `gpt-4o-mini`; an empty value stops the app from booting with a `ConfigError` naming `ai.model`.
-- `src/chat/models.ts`: `modelService.create(id)` builds the OpenAI model. It is a plain service, so tests stub it.
-- `src/chat/chat.module.ts`: `chatModule` registers the config module (awaited), assigns `modelService` to its `context`, derives the model from the configured id, and mounts `chatController`.
+- `src/ai/model.module.ts`: `modelModule` is the infrastructure module. It `include`s `await configModule.forRoot(...load)` to get `configService`, then `decorate`s the `model` and `modelInfo` built from the configured id (a later `register` sees what an earlier one added). The config loads when the module is evaluated, so a bad value fails at startup, before the server listens.
+- `src/chat/chat.module.ts`: `chatModule` is the feature module. It `include`s `modelModule` and mounts `chatController` with `mount`.
 - `src/chat/chat.controller.ts`: `POST /api/chat` streams `result.textStream` straight onto `ctx.response` (no headers to set; read it with `TextStreamChatTransport`), `POST /api/summarize` uses `generateText`, and `GET /api/model` reports the active model. `ctx.request.signal` is the `abortSignal`, so a disconnected client stops the model call.
-- `src/app.module.ts`: `.register(chatModule)` before the controller. `chatModule` awaits `configModule.forRoot(...)` when it is evaluated, so a bad config fails at startup, before the server listens.
+- `src/app.module.ts`: `.use(mount(chatModule))` after the template's controller. The model holds nothing to close, so the app does not need to include `modelModule` for lifecycle.
 
 A model endpoint costs money: add authentication, a request size limit and rate limiting before exposing it.
 
@@ -37,5 +37,5 @@ AI_MODEL=gpt-4o bun run dev            # swap the model
 
 ```sh
 bun test          # the template's controller spec
-bun run test:e2e  # the template's e2e spec, plus the SDK's mock model (no API key or network): the streamed reply, validation, the summary, model swapping through the environment, and the boot failure.
+bun run test:e2e  # the template's e2e spec plus the SDK's mock model (no API key or network): the streamed reply, validation, the summary, model swapping through the environment, and the boot failure
 ```

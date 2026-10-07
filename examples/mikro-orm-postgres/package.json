@@ -13,9 +13,9 @@
     "@mikro-orm/core": "^7.2.3",
     "@mikro-orm/migrations": "^7.2.3",
     "@mikro-orm/postgresql": "^7.2.3",
-    "@rhythmjs/middleware": "^0.0.7",
-    "@rhythmjs/rhythm": "^0.0.16",
-    "@rhythmjs/router": "^0.0.16",
+    "@rhythmjs/middleware": "^0.0.9",
+    "@rhythmjs/rhythm": "^0.0.21",
+    "@rhythmjs/router": "^0.0.21",
     "zod": "^4.1.0"
   },
   "devDependencies": {

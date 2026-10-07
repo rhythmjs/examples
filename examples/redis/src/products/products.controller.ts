@@ -1,5 +1,5 @@
 import { RhythmRouter } from "@rhythmjs/router";
-import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
+import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import type { RedisClient } from "bun";
 import type { productsService } from "./products.service";
 
@@ -11,8 +11,8 @@ export type ProductsContext = RhythmHttpContext & {
 const TTL_SECONDS = 60;
 const cacheKey = (id: string) => `product:${id}`;
 
-export const productsController = new RhythmRouter<ProductsContext>({ prefix: "/products" })
-  .get("/:id", async (ctx) => {
+export const productsController = new RhythmRouter<ProductsContext>()
+  .get("/products/:id", async (ctx) => {
     const key = cacheKey(ctx.params.id);
 
     const hit = await ctx.redis.get(key);
@@ -33,7 +33,7 @@ export const productsController = new RhythmRouter<ProductsContext>({ prefix: "/
     ctx.response.headers.set("x-cache", "miss");
     ctx.json(product);
   })
-  .patch("/:id", async (ctx) => {
+  .patch("/products/:id", async (ctx) => {
     const { name, price } = (await ctx.request.json()) as { name?: string; price?: number };
     if (price !== undefined && (typeof price !== "number" || price < 0)) {
       ctx.error(400, "price must be a non-negative number");

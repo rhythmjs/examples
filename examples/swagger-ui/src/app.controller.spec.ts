@@ -1,10 +1,11 @@
 import { describe, expect, test } from "bun:test";
+import { mount } from "@rhythmjs/rhythm";
 import { runHttpMiddleware } from "@rhythmjs/testing/router";
 import { appController } from "./app.controller";
 import { appService } from "./app.service";
 
 const run = (path: string, service: typeof appService = appService) =>
-  runHttpMiddleware(appController.middleware(), path, { appService: service });
+  runHttpMiddleware(mount(appController), path, { appService: service });
 
 describe("AppController", () => {
   test("GET / responds 200 with the service greeting", async () => {

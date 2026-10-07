@@ -1,13 +1,14 @@
 # resend-example
 
-Built from the [template](https://github.com/rhythmjs/template): its `app.module.ts`, `app.controller.ts`, `app.service.ts`, `main.ts` and tests, plus [Resend](https://resend.com)'s HTTP API: a contact form endpoint.
+A contact form endpoint that sends email through [Resend](https://resend.com)'s HTTP API.
 
-## What is added to the template
+## How it fits together
 
-- `bun add resend`
-- `src/mail/mail.service.ts`: `mailService.send` wraps `emails.send` with a lazily created client, so tests stub the service.
-- `src/app.controller.ts`: `POST /contact` handles Resend's `{ data, error }` result: Resend does not throw for API errors, so an `error` becomes a 502 instead of a false success. User input is escaped before it goes into the HTML.
-- `src/app.module.ts`: `mailService` is assigned to the module's `context` next to `appService`.
+- `src/mail/mail.service.ts`: `mailService.send` wraps `emails.send` with a lazily created client (the SDK throws without an API key, so nothing is built until the first send), which also lets tests stub the service.
+- `src/mail/mail.module.ts`: `mailModule` is the feature module. It provides `mailService` with `decorate` and mounts `mailController` with `mount`. There is no connection to close, so no infrastructure module.
+- `src/mail/mail.controller.ts`: `POST /contact`. Resend does not throw for API errors, so an `error` in its `{ data, error }` result becomes a 502 instead of a false success. User input is escaped before it goes into the HTML.
+- `src/app.module.ts`: adds `appService` with `decorate` and mounts `appController` and `mailModule`.
+- `src/main.ts`: `Bun.serve({ fetch: toFetchHandler(appModule) })`.
 
 `RESEND_API_KEY` is needed to send (create one at https://resend.com/api-keys). Until you verify a domain, send from `onboarding@resend.dev`, the default here; `MAIL_FROM` overrides it.
 
@@ -31,6 +32,6 @@ curl -X POST http://localhost:3010/contact -H 'content-type: application/json' -
 ## Test
 
 ```sh
-bun test          # the template's controller spec
-bun run test:e2e  # the template's e2e spec, plus a stubbed `mailService`: the 202 with the email id, escaping of user input, a 502 when Resend answers with an error, and a 400 that sends nothing.
+bun test          # controller specs, the mail one with a stubbed mail service
+bun run test:e2e  # the whole app with `mailService.send` stubbed: the 202 with the email id, escaping of user input, a 502 when Resend answers with an error, and a 400 that sends nothing
 ```

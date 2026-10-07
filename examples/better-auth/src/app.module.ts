@@ -1,20 +1,21 @@
-import { betterAuthModule, cors, withSession } from "@rhythmjs/better-auth";
-import { Rhythm } from "@rhythmjs/rhythm";
-import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
+import { authHandler, betterAuthModule, cors, withSession } from "@rhythmjs/better-auth";
+import { Rhythm, decorate, include, mount } from "@rhythmjs/rhythm";
+import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import { appController } from "./app.controller";
 import { appService } from "./app.service";
-import { auth, frontendOrigin } from "./lib/auth";
+import { auth, closeAuthDatabase, frontendOrigin } from "./lib/auth";
 
-export const appModule = new Rhythm<RhythmHttpContext, { appService: typeof appService }>({
-  name: "app",
-  type: "module",
-})
+export const appModule = new Rhythm<{}, RhythmHttpContext>({ name: "app" })
+  .register(decorate(() => ({ appService })))
+  .register(
+    include(betterAuthModule.forRoot({ auth }), (child) => ({ auth: child.auth })),
+    closeAuthDatabase,
+  )
   .use(cors({ origin: frontendOrigin, credentials: true, allowHeaders: ["Content-Type", "Authorization"] }))
-  .register(betterAuthModule.forRoot({ auth, path: "/api/auth" }), (m) => ({ auth: m.auth }))
+  .use(authHandler({ auth, path: "/api/auth" }))
   .use(withSession())
-  .use(appController.middleware())
+  .use(mount(appController))
   .use((ctx) => {
-    ctx.json({ success: false, status: 404, message: "Not Found" }, 404);
+    // mount() always continues, so only answer when nothing has written a body yet
+    if (ctx.response.body === null) ctx.json({ success: false, status: 404, message: "Not Found" }, 404);
   });
-
-appModule.context.appService = appService;

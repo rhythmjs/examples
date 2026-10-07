@@ -1,11 +1,9 @@
-import type { MikroORM } from "@mikro-orm/postgresql";
-import { derive, Rhythm } from "@rhythmjs/rhythm";
-import type { RhythmHttpContext } from "@rhythmjs/router/context";
+import { decorate, include, mount, Rhythm } from "@rhythmjs/rhythm";
+import { databaseModule } from "../database.module";
 import { notesController } from "./notes.controller";
 import { createNotesService } from "./notes.service";
 
-export type NotesModuleInput = RhythmHttpContext & { orm: MikroORM };
-
-export const notesModule = new Rhythm<NotesModuleInput>({ name: "notes", type: "module" })
-  .use(derive(({ orm }: NotesModuleInput) => ({ notesService: createNotesService(orm) })))
-  .use(notesController.middleware());
+export const notesModule = new Rhythm({ name: "notes" })
+  .register(include(databaseModule, ({ orm }) => ({ orm })))
+  .register(decorate(({ orm }) => ({ notesService: createNotesService(orm) })))
+  .use(mount(notesController));

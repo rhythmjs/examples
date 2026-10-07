@@ -4,9 +4,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { appModule } from "../src/app.module";
-import { createStorage } from "../src/storage";
-
-appModule.context.s3 = createStorage();
 
 describe("AppController (e2e)", () => {
   const app = toFetchHandler(appModule);
@@ -19,12 +16,11 @@ describe("AppController (e2e)", () => {
     expect(await res.text()).toBe("Hello World!");
   });
 
-  test("/missing (GET) hits the module's not-found handler", async () => {
+  test("/missing (GET) falls through to the default 404", async () => {
     const res = await app(new Request("http://localhost/missing"));
 
     expect(res.status).toBe(404);
-    expect(res.headers.get("content-type")).toBe("application/json; charset=utf-8");
-    expect(await res.json()).toEqual({ success: false, status: 404, message: "Not Found" });
+    expect(await res.text()).toBe("Not Found");
   });
 });
 

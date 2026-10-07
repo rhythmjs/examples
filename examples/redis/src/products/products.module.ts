@@ -1,15 +1,9 @@
-import type { RedisClient } from "bun";
-import { Rhythm } from "@rhythmjs/rhythm";
-import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
+import { Rhythm, decorate, include, mount } from "@rhythmjs/rhythm";
+import { redisModule } from "../redis/redis.module";
 import { productsController } from "./products.controller";
 import { productsService } from "./products.service";
 
-export const productsModule = new Rhythm<
-  RhythmHttpContext & { redis: RedisClient },
-  { productsService: typeof productsService }
->({
-  name: "products",
-  type: "module",
-}).use(productsController.middleware());
-
-productsModule.context.productsService = productsService;
+export const productsModule = new Rhythm({ name: "products" })
+  .register(include(redisModule, ({ redis }) => ({ redis })))
+  .register(decorate(() => ({ productsService })))
+  .use(mount(productsController));

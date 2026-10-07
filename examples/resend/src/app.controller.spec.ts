@@ -1,15 +1,11 @@
 import { describe, expect, test } from "bun:test";
+import { mount } from "@rhythmjs/rhythm";
 import { runHttpMiddleware } from "@rhythmjs/testing/router";
 import { appController } from "./app.controller";
 import { appService } from "./app.service";
-import type { mailService } from "./mail/mail.service";
-
-const okMailer = {
-  send: async () => ({ data: { id: "email_123" }, error: null }),
-} as unknown as typeof mailService;
 
 const run = (path: string, service: typeof appService = appService) =>
-  runHttpMiddleware(appController.middleware(), path, { appService: service, mailService: okMailer });
+  runHttpMiddleware(mount(appController), path, { appService: service });
 
 describe("AppController", () => {
   test("GET / responds 200 with the service greeting", async () => {
@@ -33,19 +29,5 @@ describe("AppController", () => {
 
     expect(nextCalled).toBe(true);
     expect(await response.text()).toBe("");
-  });
-
-  test("POST /contact answers 202 with the email id", async () => {
-    const request = new Request("http://localhost/contact", {
-      method: "POST",
-      body: JSON.stringify({ email: "ada@example.com", message: "Hi" }),
-    });
-    const { response } = await runHttpMiddleware(appController.middleware(), request, {
-      appService,
-      mailService: okMailer,
-    });
-
-    expect(response.status).toBe(202);
-    expect(await response.json()).toEqual({ id: "email_123" });
   });
 });

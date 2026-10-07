@@ -1,11 +1,9 @@
-import { derive, Rhythm } from "@rhythmjs/rhythm";
-import type { RhythmHttpContext } from "@rhythmjs/router/context";
-import type { Database } from "../database";
+import { decorate, include, mount, Rhythm } from "@rhythmjs/rhythm";
+import { databaseModule } from "../database.module";
 import { notesController } from "./notes.controller";
 import { createNotesService } from "./notes.service";
 
-export type NotesModuleInput = RhythmHttpContext & { db: Database };
-
-export const notesModule = new Rhythm<NotesModuleInput>({ name: "notes", type: "module" })
-  .use(derive(({ db }: NotesModuleInput) => ({ notesService: createNotesService(db) })))
-  .use(notesController.middleware());
+export const notesModule = new Rhythm({ name: "notes" })
+  .register(include(databaseModule, ({ db }) => ({ db })))
+  .register(decorate(({ db }) => ({ notesService: createNotesService(db) })))
+  .use(mount(notesController));

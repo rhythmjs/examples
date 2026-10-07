@@ -1,12 +1,7 @@
-import type { PrismaClient } from "@prisma/client";
-import { HttpError, filter } from "@rhythmjs/middleware/filter";
-import { Rhythm } from "@rhythmjs/rhythm";
-import type { RhythmHttpContext } from "@rhythmjs/router/context";
+import { include, mount, Rhythm } from "@rhythmjs/rhythm";
+import { databaseModule } from "./database.module";
 import { notesModule } from "./notes/notes.module";
 
-export const appModule = new Rhythm<RhythmHttpContext, { prisma: PrismaClient }>({ name: "app", type: "module" })
-  .use(filter())
-  .register(notesModule)
-  .use(() => {
-    throw new HttpError(404, "Route not found");
-  });
+export const appModule = new Rhythm({ name: "app" })
+  .register(include(databaseModule, ({ prisma }) => ({ prisma })))
+  .use(mount(notesModule));

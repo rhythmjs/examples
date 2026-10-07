@@ -1,11 +1,9 @@
-import type { PrismaClient } from "@prisma/client";
-import { derive, Rhythm } from "@rhythmjs/rhythm";
-import type { RhythmHttpContext } from "@rhythmjs/router/context";
+import { decorate, include, mount, Rhythm } from "@rhythmjs/rhythm";
+import { databaseModule } from "../database.module";
 import { notesController } from "./notes.controller";
 import { createNotesService } from "./notes.service";
 
-export type NotesModuleInput = RhythmHttpContext & { prisma: PrismaClient };
-
-export const notesModule = new Rhythm<NotesModuleInput>({ name: "notes", type: "module" })
-  .use(derive(({ prisma }: NotesModuleInput) => ({ notesService: createNotesService(prisma) })))
-  .use(notesController.middleware());
+export const notesModule = new Rhythm({ name: "notes" })
+  .register(include(databaseModule, ({ prisma }) => ({ prisma })))
+  .register(decorate(({ prisma }) => ({ notesService: createNotesService(prisma) })))
+  .use(mount(notesController));

@@ -1,18 +1,7 @@
-import { configModule, type ConfigContext } from "@rhythmjs/config";
-import { derive, Rhythm } from "@rhythmjs/rhythm";
-import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
-import { load } from "../config/ai.config";
+import { Rhythm, include, mount } from "@rhythmjs/rhythm";
+import { modelModule } from "../ai/model.module";
 import { chatController } from "./chat.controller";
-import { modelService } from "./models";
 
-type ConfiguredContext = RhythmHttpContext & ConfigContext<typeof load> & { modelService: typeof modelService };
-
-export const chatModule = new Rhythm<RhythmHttpContext, { modelService: typeof modelService }>({
-  name: "chat",
-  type: "module",
-})
-  .register(await configModule.forRoot(...load), ({ configService }) => ({ configService }))
-  .use(derive((ctx: ConfiguredContext) => ctx.modelService.create(ctx.configService.get("ai.model"))))
-  .use(chatController.middleware());
-
-chatModule.context.modelService = modelService;
+export const chatModule = new Rhythm({ name: "chat" })
+  .register(include(modelModule, ({ model, modelInfo }) => ({ model, modelInfo })))
+  .use(mount(chatController));

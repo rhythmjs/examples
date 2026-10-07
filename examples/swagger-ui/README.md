@@ -1,14 +1,14 @@
 # swagger-ui-example
 
-Built from the [template](https://github.com/rhythmjs/template): its `app.module.ts`, `app.controller.ts`, `app.service.ts`, `main.ts` and tests, plus a [Swagger UI](https://swagger.io/tools/swagger-ui/) reference page: the [Scalar example](../scalar) with the other UI.
+A [Swagger UI](https API reference page over the OpenAPI document that `@rhythmjs/openapi` generates for the app's routes. This is the [Scalar example](../scalar) with the other UI.
 
-## What is added to the template
+## How it fits together
 
-- `bun add @rhythmjs/openapi @rhythmjs/swagger @rhythmjs/http`
-- `src/app.controller.ts`: `GET /` is described with `apiOperation` and `apiResponse`.
-- `src/app.module.ts`: `openapiModule.forRoot` serves only the document, at `/openapi.json`; `swaggerModule.forRoot()` serves the Swagger UI page at `/docs`, loading it.
+- `src/app.controller.ts`: the router is wrapped with `documented(...)`, and `GET /` describes itself with `apiOperation` and `apiResponse`, which are ordinary middleware. Routers that are not wrapped are not documented.
+- `src/app.module.ts`: `.use(mount(openapiModule.forRoot({ document })))` serves the document at `/openapi.json`, and `.use(mount(swaggerModule.forRoot()))` serves the page at `/docs`. Both are plain routers mounted in the app; `openapiModule` documents everything mounted in the same app.
+- `src/main.ts`: `Bun.serve({ fetch: toFetchHandler(appModule) })`.
 
-Swagger UI loads from a CDN (`unpkg.com`, with subresource integrity), so the browser needs network access. `path` and `url` on `swaggerModule.forRoot` move the page and point it at another spec URL.
+The page loads from a CDN (`//swagger.io/tools/swagger-ui/):unpkg.com`), so the browser needs network access. `path` and `url` on `swaggerModule.forRoot` move the page and point it at another spec URL.
 
 ## Run
 
@@ -23,13 +23,13 @@ bun run dev    # http://localhost:3006
 ## Try it
 
 ```sh
-open http://localhost:3006/docs          # Swagger UI
+open http://localhost:3006/docs          # the API reference
 curl http://localhost:3006/openapi.json  # the generated document
 ```
 
 ## Test
 
 ```sh
-bun test          # the template's controller spec
-bun run test:e2e  # the template's e2e spec, plus the document and the Swagger UI page.
+bun test          # controller spec
+bun run test:e2e  # the whole app: the document describes `GET /` and the docs page points at it
 ```

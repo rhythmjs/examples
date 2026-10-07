@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@prisma/client": "^6.7.0",
-    "@rhythmjs/middleware": "^0.0.7",
-    "@rhythmjs/rhythm": "^0.0.16",
-    "@rhythmjs/router": "^0.0.16",
+    "@rhythmjs/middleware": "^0.0.9",
+    "@rhythmjs/rhythm": "^0.0.21",
+    "@rhythmjs/router": "^0.0.21",
     "zod": "^4.1.0"
   },
   "devDependencies": {

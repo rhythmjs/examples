@@ -1,6 +1,5 @@
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { appModule } from "./app.module";
-import { closeAuthDatabase } from "./lib/auth";
 import { migrate } from "./lib/migrate";
 
 await migrate();
@@ -12,6 +11,6 @@ console.log(`listening on ${server.url}`);
 
 process.on("SIGINT", async () => {
   await server.stop();
-  closeAuthDatabase();
+  await appModule.stop();
   process.exit(0);
 });

@@ -5,10 +5,10 @@ Built from the [template](https://github.com/rhythmjs/template): its `app.module
 ## What is added to the template
 
 - `bun add better-auth @rhythmjs/better-auth`
-- `src/lib/auth.ts`: the Better Auth instance, built at startup, with `closeAuthDatabase()` for shutdown (`main.ts` calls it on SIGINT); the frontend origin (`FRONTEND_URL`, default `http://localhost:3001`) is in `trustedOrigins`, which checks origins separately from CORS.
-- [`@rhythmjs/better-auth`](https://www.npmjs.com/package/@rhythmjs/better-auth): `betterAuthModule.forRoot({ auth, path })` mounts Better Auth's handler and holds `auth` on its context, `withSession()` puts `session` and `user` on the context (`null` when anonymous), and `requireSession()` answers 401 when there is none and narrows both for the handler. Both middlewares read `ctx.auth`, which the app module exports from the better-auth module.
+- `src/lib/auth.ts`: the Better Auth instance, built at startup, with `closeAuthDatabase()` to release the SQLite file; the frontend origin (`FRONTEND_URL`, default `http://localhost:3001`) is in `trustedOrigins`, which checks origins separately from CORS.
+- [`@rhythmjs/better-auth`](https://www.npmjs.com/package/@rhythmjs/better-auth): `betterAuthModule.forRoot({ auth })` puts `auth` on the startup context (registered with `include`), `authHandler({ auth, path })` is the middleware that serves Better Auth's routes, `withSession()` puts `session` and `user` on the context (`null` when anonymous), and `requireSession()` answers 401 when there is none and narrows both for the handler.
 - `src/lib/migrate.ts`: creates Better Auth's tables (`bun run db:migrate`; `bun run dev` also runs it at startup).
-- `src/app.module.ts`: `cors()`, then `betterAuthModule.forRoot({ auth, path: "/api/auth" })` (exporting `auth`) and `withSession()`, all before the controller. CORS comes first so preflights are answered and Better Auth's own responses carry the headers.
+- `src/app.module.ts`: `cors()`, then `authHandler`, then `withSession()`, all before `mount(appController)`. CORS comes first so preflights are answered and Better Auth's own responses carry the headers. `closeAuthDatabase` is the cleanup of the `include`, so `appModule.stop()` closes the database. A last middleware answers 404 as JSON for anything that wrote no body (`mount` always continues to the next middleware).
 - `src/app.controller.ts`: `GET /me`, guarded per route with `requireSession`.
 
 Set `BETTER_AUTH_SECRET` and `BETTER_AUTH_URL` outside local runs. `AUTH_DB` changes the SQLite file.
@@ -36,5 +36,5 @@ curl http://localhost:3007/me             # 401 without a session
 
 ```sh
 bun test          # the template's controller spec
-bun run test:e2e  # the template's e2e spec, plus the e2e spec runs against an in-memory database: the guard, sign-up followed by an authenticated request, a rejected wrong password, and the CORS preflight and headers.
+bun run test:e2e  # the template's e2e spec plus Better Auth on an in-memory database: the guard, sign-up followed by an authenticated request, a rejected wrong password, and the CORS preflight and headers.
 ```

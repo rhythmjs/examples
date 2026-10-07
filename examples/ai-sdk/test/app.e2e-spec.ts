@@ -1,12 +1,12 @@
-import { afterEach, describe, expect, mock, spyOn, test } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { ConfigError } from "@rhythmjs/config";
-import { Rhythm } from "@rhythmjs/rhythm";
-import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
+import { Rhythm, decorate, include, mount } from "@rhythmjs/rhythm";
 import { toFetchHandler } from "@rhythmjs/router/fetch";
 import { simulateReadableStream } from "ai";
 import { MockLanguageModelV4 } from "ai/test";
 import { appModule } from "../src/app.module";
-import { modelService } from "../src/chat/models";
+import { modelModule } from "../src/ai/model.module";
+import { chatController } from "../src/chat/chat.controller";
 import { aiConfig } from "../src/config/ai.config";
 
 describe("AppController (e2e)", () => {
@@ -20,12 +20,11 @@ describe("AppController (e2e)", () => {
     expect(await res.text()).toBe("Hello World!");
   });
 
-  test("/missing (GET) hits the module's not-found handler", async () => {
+  test("/missing (GET) falls through to the default 404", async () => {
     const res = await app(new Request("http://localhost/missing"));
 
     expect(res.status).toBe(404);
-    expect(res.headers.get("content-type")).toBe("application/json; charset=utf-8");
-    expect(await res.json()).toEqual({ success: false, status: 404, message: "Not Found" });
+    expect(await res.text()).toBe("Not Found");
   });
 });
 
@@ -55,8 +54,11 @@ function mockModel(words: string[]) {
   });
 }
 
-const stubModel = (model: MockLanguageModelV4) =>
-  spyOn(modelService, "create").mockReturnValue({ model, modelInfo: { id: "mock" } });
+// The chat controller on its own, with the mock model in place of the configured one.
+const chatApp = (model: MockLanguageModelV4) =>
+  toFetchHandler(
+    new Rhythm().register(decorate(() => ({ model, modelInfo: { id: "mock" } }))).use(mount(chatController)),
+  );
 
 const post = (app: (request: Request) => Promise<Response>, path: string, body: unknown) =>
   app(
@@ -70,14 +72,9 @@ const post = (app: (request: Request) => Promise<Response>, path: string, body: 
 const userMessage = { id: "m1", role: "user", parts: [{ type: "text", text: "Say hello" }] };
 
 describe("chat module (e2e)", () => {
-  const app = toFetchHandler(appModule);
-
-  afterEach(() => mock.restore());
-
   test("/api/chat (POST) streams the model's reply as plain text", async () => {
     const model = mockModel(["Hello", ", ", "world"]);
-    stubModel(model);
-    const res = await post(app, "/api/chat", { messages: [userMessage] });
+    const res = await post(chatApp(model), "/api/chat", { messages: [userMessage] });
 
     expect(res.status).toBe(200);
     expect(await res.text()).toBe("Hello, world");
@@ -85,23 +82,17 @@ describe("chat module (e2e)", () => {
   });
 
   test("/api/chat (POST) rejects a body without messages", async () => {
-    stubModel(mockModel(["x"]));
-    const res = await post(app, "/api/chat", { messages: [] });
+    const res = await post(chatApp(mockModel(["x"])), "/api/chat", { messages: [] });
 
     expect(res.status).toBe(400);
   });
 
   test("/api/summarize (POST) answers with the complete text", async () => {
-    stubModel(mockModel(["A short summary."]));
-    const res = await post(app, "/api/summarize", { text: "A long text about Rhythm." });
+    const res = await post(chatApp(mockModel(["A short summary."])), "/api/summarize", {
+      text: "A long text about Rhythm.",
+    });
 
     expect(await res.json()).toEqual({ summary: "A short summary." });
-  });
-
-  test("the template's own routes still work next to the module", async () => {
-    const res = await app(new Request("http://localhost/"));
-
-    expect(await res.text()).toBe("Hello World!");
   });
 });
 
@@ -121,20 +112,24 @@ const withEnv = async (env: Record<string, string | undefined>, run: () => Promi
   }
 };
 
-// The config loads when chatModule is evaluated, so each case imports a fresh copy of it.
+// The config loads when modelModule is evaluated, so each case imports a fresh copy of it.
 let copy = 0;
-const importChatModule = async () => {
-  const specifier = "../src/chat/chat.module";
-  return (await import(`${specifier}?copy=${++copy}`)) as typeof import("../src/chat/chat.module");
+const importModelModule = async () => {
+  const specifier = "../src/ai/model.module";
+  return (await import(`${specifier}?copy=${++copy}`)) as { modelModule: typeof modelModule };
 };
 
 describe("model swapping through @rhythmjs/config", () => {
   const modelInfo = async (env: Record<string, string | undefined>) => {
     let info: unknown;
     await withEnv(env, async () => {
-      const { chatModule } = await importChatModule();
-      const chatApp = toFetchHandler(new Rhythm<RhythmHttpContext>().register(chatModule));
-      info = await (await chatApp(new Request("http://localhost/api/model"))).json();
+      const { modelModule: fresh } = await importModelModule();
+      const app = toFetchHandler(
+        new Rhythm()
+          .register(include(fresh, ({ model, modelInfo }) => ({ model, modelInfo })))
+          .use(mount(chatController)),
+      );
+      info = await (await app(new Request("http://localhost/api/model"))).json();
     });
     return info;
   };
@@ -149,7 +144,7 @@ describe("model swapping through @rhythmjs/config", () => {
 
   test("an invalid value stops the app from booting, with the path in the error", async () => {
     await withEnv({ AI_MODEL: "" }, async () => {
-      await expect(importChatModule()).rejects.toBeInstanceOf(ConfigError);
+      await expect(importModelModule()).rejects.toBeInstanceOf(ConfigError);
       await expect(aiConfig()).rejects.toThrow("ai.model");
     });
   });

@@ -1,7 +1,7 @@
 import { mkdir } from "node:fs/promises";
-import { multipart, type MultipartContext } from "@rhythmjs/http/multipart";
+import { multipart } from "@rhythmjs/http/multipart";
 import { RhythmRouter } from "@rhythmjs/router";
-import type { RhythmHttpContext } from "@rhythmjs/router/adapters/context";
+import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import type { S3Client } from "bun";
 import type { appService } from "./app.service";
 
@@ -18,7 +18,7 @@ export const appController = new RhythmRouter<AppContext>()
   .get("/", (ctx) => {
     ctx.text(ctx.appService.getHello());
   })
-  .post<MultipartContext>("/avatar", limits, async (ctx) => {
+  .post("/avatar", limits, async (ctx) => {
     const file = ctx.form.file("avatar");
     if (!file) {
       ctx.error(400, "avatar missing");
@@ -44,7 +44,7 @@ export const appController = new RhythmRouter<AppContext>()
     ctx.response.headers.set("content-type", ctx.params.key.endsWith(".png") ? "image/png" : "image/jpeg");
     ctx.response.body = file;
   })
-  .post<MultipartContext>("/documents", limits, async (ctx) => {
+  .post("/documents", limits, async (ctx) => {
     const file = ctx.form.file("document");
     if (!file) {
       ctx.error(400, "document missing");
