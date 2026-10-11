@@ -2,17 +2,18 @@ import { RhythmRouter } from "@rhythmjs/router";
 import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import { convertToModelMessages, generateText, streamText, type UIMessage } from "ai";
 import type { ChatModel } from "../ai/model.module";
+import { error, json } from "@rhythmjs/router/response";
 
 export type ChatContext = RhythmHttpContext & ChatModel;
 
 export const chatController = new RhythmRouter<ChatContext>()
   .get("/api/model", (ctx) => {
-    ctx.json(ctx.modelInfo);
+    json(ctx, ctx.modelInfo);
   })
   .post("/api/chat", async (ctx) => {
     const { messages } = (await ctx.request.json()) as { messages?: UIMessage[] };
     if (!Array.isArray(messages) || messages.length === 0) {
-      ctx.error(400, "messages are required");
+      error(ctx, 400, "messages are required");
       return;
     }
 
@@ -28,7 +29,7 @@ export const chatController = new RhythmRouter<ChatContext>()
   .post("/api/summarize", async (ctx) => {
     const { text } = (await ctx.request.json()) as { text?: string };
     if (!text) {
-      ctx.error(400, "text is required");
+      error(ctx, 400, "text is required");
       return;
     }
 
@@ -38,5 +39,5 @@ export const chatController = new RhythmRouter<ChatContext>()
       abortSignal: ctx.request.signal,
     });
 
-    ctx.json({ summary: result.text });
+    json(ctx, { summary: result.text });
   });

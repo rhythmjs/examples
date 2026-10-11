@@ -11,9 +11,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@rhythmjs/middleware": "^0.0.9",
-    "@rhythmjs/rhythm": "^0.0.21",
-    "@rhythmjs/router": "^0.0.21",
+    "@rhythmjs/middleware": "^0.0.11",
+    "@rhythmjs/rhythm": "^0.0.24",
+    "@rhythmjs/router": "^0.0.24",
     "drizzle-orm": "^0.44.2",
     "zod": "^4.1.0"
   },

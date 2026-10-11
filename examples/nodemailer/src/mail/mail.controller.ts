@@ -1,6 +1,7 @@
 import { RhythmRouter } from "@rhythmjs/router";
 import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import type { MailService } from "./mail.service";
+import { error, json } from "@rhythmjs/router/response";
 
 export type MailContext = RhythmHttpContext & {
   mailService: MailService;
@@ -9,10 +10,10 @@ export type MailContext = RhythmHttpContext & {
 export const mailController = new RhythmRouter<MailContext>().post("/signup", async (ctx) => {
   const { name, email } = (await ctx.request.json()) as { name?: string; email?: string };
   if (!name || !email?.includes("@")) {
-    ctx.error(400, "name and a valid email are required");
+    error(ctx, 400, "name and a valid email are required");
     return;
   }
 
   const info = await ctx.mailService.sendWelcome(email, name);
-  ctx.json({ messageId: info.messageId }, 201);
+  json(ctx, { messageId: info.messageId }, 201);
 });

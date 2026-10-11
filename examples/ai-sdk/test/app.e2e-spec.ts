@@ -60,7 +60,7 @@ const chatApp = (model: MockLanguageModelV4) =>
     new Rhythm().register(decorate(() => ({ model, modelInfo: { id: "mock" } }))).use(mount(chatController)),
   );
 
-const post = (app: (request: Request) => Promise<Response>, path: string, body: unknown) =>
+const post = (app: (request: Request) => Response | Promise<Response>, path: string, body: unknown) =>
   app(
     new Request(`http://localhost${path}`, {
       method: "POST",

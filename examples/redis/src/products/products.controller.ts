@@ -2,6 +2,7 @@ import { RhythmRouter } from "@rhythmjs/router";
 import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import type { RedisClient } from "bun";
 import type { productsService } from "./products.service";
+import { error, json } from "@rhythmjs/router/response";
 
 export type ProductsContext = RhythmHttpContext & {
   redis: RedisClient;
@@ -18,34 +19,34 @@ export const productsController = new RhythmRouter<ProductsContext>()
     const hit = await ctx.redis.get(key);
     if (hit !== null) {
       ctx.response.headers.set("x-cache", "hit");
-      ctx.json(JSON.parse(hit));
+      json(ctx, JSON.parse(hit));
       return;
     }
 
     const product = await ctx.productsService.get(ctx.params.id);
     if (!product) {
-      ctx.error(404, "Product not found");
+      error(ctx, 404, "Product not found");
       return;
     }
 
     await ctx.redis.set(key, JSON.stringify(product));
     await ctx.redis.expire(key, TTL_SECONDS);
     ctx.response.headers.set("x-cache", "miss");
-    ctx.json(product);
+    json(ctx, product);
   })
   .patch("/products/:id", async (ctx) => {
     const { name, price } = (await ctx.request.json()) as { name?: string; price?: number };
     if (price !== undefined && (typeof price !== "number" || price < 0)) {
-      ctx.error(400, "price must be a non-negative number");
+      error(ctx, 400, "price must be a non-negative number");
       return;
     }
 
     const product = ctx.productsService.update(ctx.params.id, { name, price });
     if (!product) {
-      ctx.error(404, "Product not found");
+      error(ctx, 404, "Product not found");
       return;
     }
 
     await ctx.redis.del(cacheKey(ctx.params.id));
-    ctx.json(product);
+    json(ctx, product);
   });

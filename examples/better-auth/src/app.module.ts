@@ -4,6 +4,7 @@ import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import { appController } from "./app.controller";
 import { appService } from "./app.service";
 import { auth, closeAuthDatabase, frontendOrigin } from "./lib/auth";
+import { json } from "@rhythmjs/router/response";
 
 export const appModule = new Rhythm<{}, RhythmHttpContext>({ name: "app" })
   .register(decorate(() => ({ appService })))
@@ -17,5 +18,5 @@ export const appModule = new Rhythm<{}, RhythmHttpContext>({ name: "app" })
   .use(mount(appController))
   .use((ctx) => {
     // mount() always continues, so only answer when nothing has written a body yet
-    if (ctx.response.body === null) ctx.json({ success: false, status: 404, message: "Not Found" }, 404);
+    if (ctx.response.body === null) json(ctx, { success: false, status: 404, message: "Not Found" }, 404);
   });

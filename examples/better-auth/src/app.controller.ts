@@ -2,6 +2,7 @@ import { requireSession, type AuthContext, type SessionContext } from "@rhythmjs
 import { RhythmRouter } from "@rhythmjs/router";
 import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import type { appService } from "./app.service";
+import { json, text } from "@rhythmjs/router/response";
 
 export type AppContext = RhythmHttpContext &
   AuthContext &
@@ -11,10 +12,10 @@ export type AppContext = RhythmHttpContext &
 
 export const appController = new RhythmRouter<AppContext>()
   .get("/", (ctx) => {
-    ctx.text(ctx.appService.getHello());
+    text(ctx, ctx.appService.getHello());
   })
   .get("/me", requireSession(), (ctx) => {
-    ctx.json({
+    json(ctx, {
       id: ctx.user.id,
       name: ctx.user.name,
       email: ctx.user.email,

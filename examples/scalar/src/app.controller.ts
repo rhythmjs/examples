@@ -4,6 +4,7 @@ import { apiResponse } from "@rhythmjs/openapi/response";
 import { RhythmRouter } from "@rhythmjs/router";
 import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import type { appService } from "./app.service";
+import { text } from "@rhythmjs/router/response";
 
 export type AppContext = RhythmHttpContext & {
   appService: typeof appService;
@@ -14,6 +15,6 @@ export const appController = documented(new RhythmRouter<AppContext>()).get(
   apiOperation({ summary: "Say hello", operationId: "getHello" }),
   apiResponse(200, { description: "A greeting", content: { "text/plain": { schema: { type: "string" } } } }),
   (ctx) => {
-    ctx.text(ctx.appService.getHello());
+    text(ctx, ctx.appService.getHello());
   },
 );

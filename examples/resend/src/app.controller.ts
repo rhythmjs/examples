@@ -1,11 +1,12 @@
 import { RhythmRouter } from "@rhythmjs/router";
 import type { RhythmHttpContext } from "@rhythmjs/router/context";
 import type { appService } from "./app.service";
+import { text } from "@rhythmjs/router/response";
 
 export type AppContext = RhythmHttpContext & {
   appService: typeof appService;
 };
 
 export const appController = new RhythmRouter<AppContext>().get("/", (ctx) => {
-  ctx.text(ctx.appService.getHello());
+  text(ctx, ctx.appService.getHello());
 });
